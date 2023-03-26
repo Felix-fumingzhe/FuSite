@@ -51,8 +51,6 @@ def before():
             return redirect("/admin/login")
     elif request.path.split("/")[1] == "static":
         return None
-    elif request.path.split("/")[1] in ["test", "chatgpt", "activity"]:
-        return None
     elif session["login"] == "login":
         history()
         return None
