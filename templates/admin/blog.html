@@ -1,0 +1,99 @@
+{% extends 'admin/index.html' %}
+
+{% block title %}
+FuSite-博客管理
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://fu-mingzhe.github.io/static/tinymce/plugins/becodesample/highlight.js-11.5.1/styles/atom-one-light.css">
+{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-8">
+                <div class="box">
+                    <h1 class="is-size-2 has-text-weight-bold">
+                        <a>{{ blog['标题'] }}</a>
+                    </h1>
+                    <div class="is-size-7 has-text-grey-light pt-1 pb-1">
+                        <span class="mr-3">作者:{{ blog['作者'] }}</span> <span>发布日期:{{ blog['上传日期']|strftime }}</span> <span>修改日期:{{ blog['修改日期']|strftime }}</span> <span>浏览量:{{ blog['浏览量'] }}</span>
+                    </div>
+                    <div class="content" style="margin-top: 1em;">
+                        文章描述: {{ blog['描述'] }}
+                    </div>
+                    <div class="content" style="margin-top: 2em;">
+                        {{ blog['文章内容']|safe }}
+                    </div>
+                </div>
+                 {% if blog['作者']|is_admin %}
+                    <div class="is-pulled-right is-size-6">
+                        &nbsp;/&nbsp;
+                        <a href="/admin_blog/editor?word_id={{ blog['文章id'] }}">
+                            修改文章
+                        </a>
+                    </div>
+                {% endif %}
+                <a class="is-pulled-right is-size-6 has-text-danger" href="?delete=dalete">
+                    删除文章
+                </a>
+                <form action="" method="post" style="margin-top: 1em;">
+                    <p style="margin-top: 1em;">
+                        <label class="checkbox">
+                            {% if blog["是否热门"] == "是" %}
+                                <input type="checkbox" name="rm" value="是" checked>
+                            {% else %}
+                                <input type="checkbox" name="rm" value="是">
+                            {% endif %}
+                            是否热门
+                        </label>
+                    </p>
+                    <input class="button is-success is-fullwidth" type="submit" style="margin-top: 1em;">
+                </form>
+                <div class="box mt-6">
+                    <div class="level">
+                        <div class="level-left">
+                            {% if prev_blog != None %}
+                            <span>上一篇:</span><a href="/admin_blog/{{ prev_blog.文章id }}" class="level-item">{{ prev_blog.标题 }}</a>
+                            {% else %}
+                            <span class="has-text-danger-dark is-size-7">无上一篇</span>
+                            {% endif %}
+                        </div>
+                        <div class="level-right">
+                            {% if next_blog != None %}
+                            <span>下一篇:</span><a href="/admin_blog/{{ next_blog.文章id }}" class="level-item">{{ next_blog.标题 }}</a>
+                            {% else %}
+                            <span class="has-text-danger-dark is-size-7">已经是最后一篇</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-4">
+                <div class="box">
+                    <h1 class="is-size-5 title">搜索</h1>
+                    <div>
+                        <form action="/admin_blog/search">
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <input type="search" class="input is-success" name="keyword" placeholder="关键字" value="{{ keyword }}">
+                                </div>
+                                <div class="control">
+                                    <input class="button is-success" type="submit" value="搜索">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="box">
+                    <h1 class="is-size-5 title">操作</h1>
+                    <button class="button is-success is-fullwidth" onclick="window.open('/admin/add_blog')">添加文章</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

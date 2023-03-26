@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+
+{% block title %}
+FuSite-工具-人脸识别
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div class="box box mt-6 ml-6 mr-6">
+    <form action="" method="post" enctype="multipart/form-data">
+        <div id="file-js-example" class="file has-name {{ username|color }} is-fullwidth mt-3">
+            <label class="file-label">
+                <input class="file-input" id="id_file" type="file" name="face_img" accept="image/png, image/jpeg" required>
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="icon ion-android-upload"></i>
+                    </span>
+                    <span class="file-label">
+                       上传人脸图片
+                    </span>
+                </span>
+                <span class="file-name">
+                    没有上传任何图片
+                </span>
+            </label>
+        </div>
+        <input type="submit" class="button is-fullwidth mt-3" value="提交">
+    </form>
+    {% if text %}
+	<img src="/static/images/Face/{{ username }}.png" class="mt-3" alt="">
+        {% set c = username|text_color %}
+        <div class="mt-3">
+            {% for i in text %}
+                <h2 class="{{c}}">{{i}}</h2>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block end %}
+<script>
+    const fileInput = document.querySelector('#file-js-example input[type=file]');
+    fileInput.onchange = () => {
+        if(fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js-example .file-name');
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+</script>
+{% endblock %}

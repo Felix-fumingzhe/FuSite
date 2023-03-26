@@ -1,0 +1,109 @@
+{% extends 'admin/index.html' %}
+
+{% block title %}
+FuSite-音乐管理
+{% endblock %}
+
+{% block content %}
+
+<div class="box mt-6 ml-6 mr-6">
+    <div class="table-container">
+        <table class="table is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th title="序号">序号</th>
+                    <th title="歌名">歌名</th>
+                    <th title="歌手">歌手</th>
+                    <th title="专辑">专辑</th>
+                    <th title="删除歌曲">删除歌曲</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th title="序号">序号</th>
+                    <th title="歌名">歌名</th>
+                    <th title="歌手">歌手</th>
+                    <th title="专辑">专辑</th>
+                    <th title="删除歌曲">删除歌曲</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            {% for i in music %}
+                {% if i != "_id" %}
+                    <tr id="{{ i }}">
+                        <td >{{ i }}</td>
+                        <td>{{ music[i]['music_name'] }}</td>
+                        <td>{{ music[i]['music_artist'] }}</td>
+                        <td>{{ music[i]['music_album'] }}</td>
+                        <td><a style="color: red;" href="?remove={{ i }}">删除</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <form action="/admin/add_music" method="post" enctype="multipart/form-data">
+        <h1 class="title">添加音乐</h1>
+        <span class="mt-3">请输入歌曲名</span>
+        <input type="text" placeholder="请输入歌曲名" name="name" id="name" class="input is-success" required>
+        <span class="mt-3">请输入歌手名</span>
+        <input type="text" placeholder="请输入歌手名" name="music_artist" id="music_artist" class="input is-success" required>
+        <span class="mt-3">请输入专辑名</span>
+        <input type="text" placeholder="请输入专辑名" name="music_album" id="music_album" class="input is-success" required>
+        <span class="mt-3">请选择音频文件</span>
+        <div id="file-js-music" class="file has-name is-success">
+            <label class="file-label">
+                <input class="file-input" type="file" name="music" accept=".mp3" required>
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        请选择音频文件
+                    </span>
+                </span>
+                <span class="file-name">
+                    未选择任何文件
+                </span>
+            </label>
+        </div>
+        <span class="mt-3">请选择图片文件</span>
+        <div id="file-js-img" class="file has-name is-success">
+            <label class="file-label">
+                <input class="file-input" type="file" name="img" accept=".jpg" required>
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                        请选择图片文件
+                    </span>
+                </span>
+                <span class="file-name">
+                    未选择任何文件
+                </span>
+            </label>
+        </div>
+        <input type="submit" class="button is-fullwidth mt-3 is-success" value="提交">
+    </form>
+</div>
+{% endblock %}
+
+{% block end %}
+<script>
+    const fileInput_img = document.querySelector('#file-js-img input[type=file]');
+    fileInput_img.onchange = () => {
+        if (fileInput_img.files.length > 0) {
+            const fileName = document.querySelector('#file-js-img .file-name');
+            fileName.textContent = fileInput_img.files[0].name;
+        }
+    }
+    const fileInput_music = document.querySelector('#file-js-music input[type=file]');
+    fileInput_music.onchange = () => {
+        if (fileInput_music.files.length > 0) {
+            const fileName = document.querySelector('#file-js-music .file-name');
+            fileName.textContent = fileInput_music.files[0].name;
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+{% block title %}
+FuSite-工具-AI智能问答
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="box mt-6 ml-6 mr-6">
+    <form action="" method="post" onsubmit="jz()">
+        <input type="text" name="text" id="text" class="input is-fullwidth {{ username|color }} mt-3" required value="{{ text }}" placeholder="请输入要询问的内容">
+        <input type="submit" value="提交" class="button is-fullwidth {{ username|color }} mt-3">
+    </form> 
+</div>
+
+{% if chat %}
+
+<div class="box mt-6 ml-6 mr-6">
+    <div class="mt-3">{{ chat|safe }}</div>
+</div>
+
+{% endif %}
+
+<script>
+    function jz(){
+        mui.alert("加载的时间可能较长\n请耐心等待~");
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+
+{% block title %}
+FuSite-工具-词云图
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div class="box box mt-6 ml-6 mr-6">
+    <form action="" method="post" enctype="multipart/form-data">
+        <textarea class="textarea {{ username|color }}" name="word" placeholder="请输入要变成词云图的内容" required>{{ words }}</textarea>
+        <div id="file-js-example" class="file has-name {{ username|color }} is-fullwidth mt-3">
+            <label class="file-label">
+                <input class="file-input" id="id_file" type="file" name="img" accept="image/png, image/jpeg">
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="icon ion-android-upload"></i>
+                    </span>
+                    <span class="file-label">
+                       上传图片
+                    </span>
+                </span>
+                <span class="file-name">
+                    没有上传任何图片
+                </span>
+            </label>
+        </div>
+        <input type="submit" class="button is-fullwidth mt-3" value="提交">
+    </form>
+    {% if img %}
+        <div style="text-align:center;">
+            <img src="/static/images/WordCloud/{{ username }}.png" class="mt-6">
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block end %}
+<script>
+    const fileInput = document.querySelector('#file-js-example input[type=file]');
+    fileInput.onchange = () => {
+        if(fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js-example .file-name');
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+</script>
+{% endblock %}

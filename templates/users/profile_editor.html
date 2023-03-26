@@ -1,0 +1,102 @@
+{% extends 'users/profile.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="https://fu-mingzhe.github.io/static/tinymce/plugins/becodesample/highlight.js-11.5.1/styles/atom-one-light.css">
+{% endblock %}
+
+{% block content_title %}
+<li class="is-active"><a>修改个人信息</a></li>
+{% endblock %}
+
+{% block users %}
+
+{% endblock %}
+
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">
+    <h1 class="title has-text-centered has-text-wight-bold is-size-2">修改个人信息</h1>
+    <p style="margin-top: 1em;">
+        <label for="id_gxqm">个性签名:</label>
+        <input type="text" name="gxqm" class="input is-link" placeholder="个性签名" minlength="1" maxlength="8" id="id_gxqm" value="{{ gxqm }}">
+    </p>
+    <p style="margin-top: 1em;">
+        <label for="id_sjh">手机号:</label>
+        <input type="text" name="sjh" class="input is-link" placeholder="手机号" minlength="11" maxlength="11" id="id_sjh" value="{{ sjh }}">
+    </p>
+    <div style="margin-top: 1em;">
+        <label for="id_sjh">性别:</label>
+        <div class="control">
+            <label class="radio">
+                {% if xb == "男" %}
+                <input type="radio" name="xb" value="男" checked>
+                {% else %}
+                <input type="radio" name="xb" value="男">
+                {% endif %}
+                男
+            </label>
+            <label class="radio">
+                {% if xb == "女" %}
+                <input type="radio" name="xb" value="女" checked>
+                {% else %}
+                <input type="radio" name="xb" value="女">
+                {% endif %}
+                女
+            </label>
+        </div>
+    </div>
+    <p style="margin-top: 1em;">
+        <label for="id_sr">生日:</label>
+        <input type="date" name="sr" class="input is-link" placeholder="生日" id="id_sr" value="{{ sr }}">
+    </p>
+    <p style="margin-top: 1em;">
+        <label for="id_ah">爱好:</label>
+        <input type="text" name="ah" class="input is-link" minlength="3" maxlength="30" placeholder="爱好" id="id_ah" value="{{ ah }}">
+    </p>
+    <p style="margin-top: 1em;">
+        <label for="id_dz">地址:</label>
+        <input type="text" name="dz" class="input is-link" minlength="2" maxlength="50" placeholder="地址" id="id_dz" value="{{ dz }}">
+    </p>
+    <div style="margin-top: 1em;">
+        <label for="id_file">头像:</label>
+        <div id="file-js-example" class="file has-name is-link">
+            <label class="file-label">
+                <input class="file-input" id="id_file" type="file" name="head" accept="image/png, image/jpeg">
+                <span class="file-cta">
+                    <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                       上传图片
+                    </span>
+                </span>
+                <span class="file-name">
+                    没有上传任何图片
+                </span>
+            </label>
+        </div>
+    </div>
+    <p style="margin-top: 1em;">
+        <label for="id_grjj">个人简介:</label>
+        <textarea name="grjj" class="textarea is-link" placeholder="个人简介" id="id_grjj" rows="5">{{ grjj }}</textarea>
+    </p>
+    <div class="is-pulled-left is-size-7 has-text-danger" style="margin-top: 1em;">
+        <span>{{ error }}</span>
+    </div>
+    <div class="is-clearfix"></div>
+    <input type="submit" style="margin-top: 1em;" class="button is-link is-fullwidth" value="提交">
+</form>
+{% endblock %}
+
+{% block end %}
+
+<script>
+    const fileInput = document.querySelector('#file-js-example input[type=file]');
+    fileInput.onchange = () => {
+        if(fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js-example .file-name');
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+</script>
+
+{% endblock %}

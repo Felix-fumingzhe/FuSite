@@ -1,0 +1,45 @@
+{% extends 'users/base.html' %}
+
+
+{% block title %}
+    FuSite-管理员登录
+{% endblock %}
+
+{% block body %}
+<div class="box">
+    <h1 class="title has-text-centered has-text-wight-bold is-size-1">FuSite
+        <br><span class="tag is-size-6">管理员登录</span>
+    </h1>
+    <hr class="dropdown-divider">
+    <form action="" method="post">
+        <div style="margin-top: 2em;">
+            <p>
+                <label for="id_username">用户名/邮箱:</label>
+                <input type="text" class="input is-link" name="username_Or_email" placeholder="用户名/邮箱" maxlength="32" required id="id_username" value="{{ username_Or_email }}">
+            </p>
+            <p style="margin-top: 1em;">
+                <label for="id_password">密码:</label>
+                <input type="password" name="password" class="input is-link" placeholder="密码" minlength="8" required id="id_password" value="{{ password }}">
+            </p>
+        </div>
+        <div class="is-pulled-left is-size-6 has-text-danger" style="margin-top: 1em;">
+            <span>{{ error }}</span>
+        </div>
+        <div class="is-clearfix"></div>
+        <input type="submit" style="margin-top: 1em;" class="button is-link is-fullwidth" value="提交">
+    </form>
+</div>
+
+{% endblock %}
+
+{% block end %}
+<script>
+    {% if qx == "1" %}
+        mui.alert("您登录的{{ username }}账号是管理员\n您可以用此账号登录");
+    {% endif %}
+
+    {% if admin_login_text != "" %}
+        mui.alert('{{ admin_login_text }}'.replace('/n','\n'));
+    {% endif %}
+</script>
+{% endblock %}

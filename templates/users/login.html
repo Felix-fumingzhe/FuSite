@@ -1,0 +1,53 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+    FuSite-登录
+{% endblock %}
+
+{% block body %}
+    <div class="box">
+        <h1 class="title has-text-centered has-text-wight-bold is-size-1">FuSite
+            <br><span class="tag is-size-6">登录</span>
+        </h1>
+        <hr class="dropdown-divider">
+        <form action="" method="post">
+            <div style="margin-top: 2em;">
+                <p>
+                    <label for="id_username">用户名/邮箱:</label>
+                    <input type="text" class="input is-link" name="username_Or_email" placeholder="用户名/邮箱" maxlength="32" required id="id_username" value="{{ username_Or_email }}">
+                </p>
+                <p style="margin-top: 1em;">
+                    <label for="id_password">密码:</label>
+                    <input type="password" name="password" class="input is-link" placeholder="密码" minlength="8" required id="id_password" value="{{ password }}">
+                </p>
+            </div>
+            <label class="checkbox is-pulled-left is-size-6" style="margin-top: 1em;">
+                {% if remember == "on" %}
+                <input type="checkbox" name="remember" id="remember" checked>
+                {% else %}
+                <input type="checkbox" name="remember" id="remember">
+                {% endif %}
+                记住我
+            </label>
+            <div class="is-pulled-left is-size-6 has-text-danger" style="margin-top: 1em;">
+                {% if error %}
+                    <span>&nbsp;&nbsp;{{ error }}</span>
+                {% endif %}
+            </div>
+            <div class="is-pulled-right is-size-6" style="margin-top: 1em;">
+                <a href="/users/forget_password">忘记密码?</a>
+                <span>&nbsp;/&nbsp;</span>
+                <a href="/users/register">去注册?</a>
+            </div>
+            <div class="is-clearfix"></div>
+            <input type="submit" style="margin-top: 1em;" class="button is-link is-fullwidth" value="提交">
+        </form>
+    </div>
+{% endblock %}
+{% block end %}
+<script>
+    if("{{ login_text }}" != ""){
+        mui.alert("{{ login_text }}");
+    }
+</script>
+{% endblock %}

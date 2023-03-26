@@ -1,0 +1,94 @@
+{% extends 'users/profile.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content_title %}
+<li class="is-active"><a>更改邮箱</a></li>
+{% endblock %}
+
+{% block users %}
+
+{% endblock %}
+
+{% block content %}
+
+<form action="" method="post">
+    <h1 class="title has-text-centered has-text-wight-bold is-size-2">更改邮箱</h1>
+    <p style="margin-top: 1em;">
+        <label for="id_email">新邮箱:</label>
+        <input type="email" name="email" class="input is-link" placeholder="邮箱" maxlength="32" required id="id_email" value="{{ email }}">
+    </p>
+    <div style="margin-top: 1em;">
+        <label for="id_verification">验证码:</label>
+        <div class="field has-addons">
+            <div class="control">
+                <input class="input is-link" type="text" minlength="6" maxlength="6" name="verification" id="id_verification" placeholder="验证码" required value="{{ verification }}">
+            </div>
+            <div class="control">
+                <button type="button" class="button is-link" id="button">发送验证码</button>
+            </div>
+        </div>
+    </div>
+    <div class="is-pulled-left is-size-7 has-text-danger" style="margin-top: 1em;">
+        <span>{{ error }}</span>
+    </div>
+    <div class="is-clearfix"></div>
+    <input type="submit" style="margin-top: 1em;" class="button is-link is-fullwidth" value="提交">
+</form>
+
+{% endblock %}
+
+{% block end %}
+<script>
+var btn = $("#button")[0];
+var time = 120;
+var reg = /^\s+$/g;
+btn.addEventListener('click',function(){
+    this.disabled = true;
+    var value = $("#id_email").val();
+    if(validatorEmail(value)){
+        if(value != "{{ 邮箱 }}"){
+            $.post("/users/send_email",
+            {username:"",email:value,type:"change_email"},
+            function(data,status){
+                if(data == "1"){
+                    mui.alert("邮箱已存在");
+                    btn.disabled = false;
+                    btn.innerHTML = "发送验证码";
+                    time = 120;
+                } else {
+                    mui.alert("验证码发送成功,有效期20分钟");
+                    var timer = setInterval(function(){
+                        if(time == 0){
+                            clearInterval(timer);
+                            btn.disabled = false;
+                            btn.innerHTML = "发送验证码";
+                            time = 120;
+                        } else {
+                            btn.innerHTML = time + "秒之后重新发送";
+                            time--;
+                        }
+                    },1000)
+                }
+            },"text")
+        } else {
+            mui.alert("邮箱不能和现在一样");
+            btn.disabled = false;
+            btn.innerHTML = "发送验证码";
+            time = 120;
+        }
+    }else{
+        mui.alert("邮箱填写不符合要求");
+        btn.disabled = false;
+        btn.innerHTML = "发送验证码";
+        time = 120;
+    }
+})
+function validatorEmail(value){
+    eval("var reg = /^([a-zA-z0-9_\.\-])+\@(([a-zA-z0-9\-])+\.)+([z-zA-z0-9]{2,4})+$/;");
+    return RegExp(reg).test(value);
+}
+</script>
+{% endblock %}

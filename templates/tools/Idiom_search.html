@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+
+{% block title %}
+FuSite-工具-词云图
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div class="box box mt-6 ml-6 mr-6">
+    <form action="" method="get">
+        <input type="text" class="input is-fullwidth {{ username|color }}" placeholder="请输入要搜索的成语" required name="keyword" value="{{ keyword }}">
+        <input type="submit" class="button is-fullwidth mt-3" value="搜索">
+    </form>
+    {% if idiom_list %}
+        <div class="mt-3">
+            {% for idiom_dict in idiom_list %}
+                <div class="{{ username|text_color }}">
+                {% for idiom_txt in idiom_dict %}
+                    <span>{{ idiom_txt }}:{{ idiom_dict[idiom_txt] }}</span>
+                    {% if idiom_dict[idiom_txt] == "" %}
+                        <span>无</span>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    {% else %}
+        {% if idiom_list == None %}
+            <h1 class="title has-text-danger mt-3">暂未搜索到关于{{ keyword }}的成语</h1>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+
+{% block title %}
+FuSite-工具-生成手写图片
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div class="box box mt-6 ml-6 mr-6">
+    <form action="" method="get">
+        <input type="text" name="msg" value="{{ msg }}" class="input is-fullwidth {{ username|color }}" placeholder="请输入要生成为手写图片的文字" required>
+        <input type="submit" class="button is-fullwidth mt-3" value="搜索">
+    </form>
+    {% if msg %}
+    <div style="text-align: center;">
+        <img src="/static/images/Handwriting/{{ username }}.png" class="mt-6">
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block end %}
+<script>
+    const fileInput = document.querySelector('#file-js-example input[type=file]');
+    fileInput.onchange = () => {
+        if(fileInput.files.length > 0) {
+            const fileName = document.querySelector('#file-js-example .file-name');
+            fileName.textContent = fileInput.files[0].name;
+        }
+    }
+</script>
+{% endblock %}

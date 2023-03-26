@@ -1,0 +1,62 @@
+{% extends 'admin/index.html' %}
+
+{% block title %}
+FuSite-添加博客
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+    <div class="box mt-6 ml-6 mr-6 ">
+        <h1 class="title has-text-centered has-text-wight-bold is-size-2">添加博客</h1>
+        <p style="margin-top: 2em;">
+            <label for="id_bt">文章标题:</label>
+            <input type="text" class="input is-success" placeholder="请输入文章标题" id="id_bt" name="bt" required>
+        </p>
+        <p style="margin-top: 1em;">
+            <label for="id_ms">文章描述:</label>
+            <textarea class="textarea is-success has-fixed-size" maxlength="50" placeholder="请输入文章描述" id="id_ms" rows="2" name="ms" required></textarea>
+        </p>
+        <div style="margin-top: 1em;">
+            <textarea name="content" style="height: 100em;" id="content"></textarea>
+        </div>
+        <p style="margin-top: 1em;">
+            <label class="checkbox">
+                <input type="checkbox" name="rm" value="是">
+                是否热门
+            </label>
+        </p>
+        <input class="button is-success is-fullwidth" type="submit" style="margin-top: 1em;">
+    </div>
+</form>
+{% endblock %}
+
+{% block end %}
+<script src="https://fu-mingzhe.github.io/static/tinymce/tinymce.min.js"></script>
+<script src="/static/tinymce/plugins/becodesample/highlight.js-11.5.1/highlight.min.js"></script>
+<script>
+    tinymce.init({
+        selector: "#content",
+        language:'zh_CN',
+        branding: false,
+        menu: {
+            file: {title: '文件', items: ''},
+            edit: {title: '编辑', items: 'undo redo | cut copy paste pastetext | selectall'},
+            insert: {title: '插入', items: 'link media | template hr'},
+            view: {title: '查看', items: 'code visualaid'},
+            format: {title: '格式', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
+            table: {title: '表格', items: 'inserttable tableprops deletetable | cell row column'},
+            tools: {title: '工具', items: 'code'}
+        },
+        plugins: 'indent2em bdmap becodesample image imagetools code quickbars anchor paste table link visualaid hr insertdatetime lists media preview searchreplace wordcount charmap emoticons fullscreen kityformula-editor lineheight importword fontsizeselect',
+        toolbar1: 'code undo redo | cut copy paste | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify',
+        toolbar2: 'fontsizeselect title | superscript subscript | numlist bullist | becodesample bdmap indent2em',
+        toolbar3: 'table image media hr insertdatetime preview searchreplace kityformula-editor  charmap emoticons lineheight wordcount importword fullscreen',
+        fontsize_formats: '10px 12px 14px 16px 18px 24px 36px 48px 64px ',
+        quickbars_insert_toolbar: 'image link table emoticons',
+        content_css: 'https://fu-mingzhe.github.io/static/tinymce/plugins/becodesample/highlight.js-11.5.1/styles/atom-one-light.css',
+        lineheight_formats: '1.0 1.2 1.4 1.5 1.6 1.8 2.0 2.4 2.5 2.6 2.8 3.0',
+        images_upload_url: '/upload_admin_images',
+        images_upload_base_path: '/'
+    });
+</script>
+{% endblock %}

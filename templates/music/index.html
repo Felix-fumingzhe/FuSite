@@ -1,0 +1,120 @@
+{% extends 'index.html' %}
+
+{% block title %}
+FuSite-音乐
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="box mt-6 ml-6 mr-6">
+    <form action="/music/get_music" method="get">
+        <div class="field has-addons mt-3 ml-3">
+            <div class="control is-expanded">
+                <input class="input is-rounded is-fullwidth is-primary" name="music_name" type="text" placeholder="请输入要搜索的歌名" required value="{{ music_name }}">
+            </div>
+            <div class="control is-expanded">
+                <input type="submit" class="button is-primary is-rounded" style="width: 10vw;" value="搜索">
+            </div>
+        </div>
+        <br>
+    </form>
+    <div class="table-container">
+        <table class="table is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th title="序号">序号</th>
+                    <th title="歌名">歌名</th>
+                    <th title="歌手">歌手</th>
+                    <th title="专辑">专辑</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th title="序号">序号</th>
+                    <th title="歌名">歌名</th>
+                    <th title="歌手">歌手</th>
+                    <th title="专辑">专辑</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            {% for i in music %}
+                {% if i != "_id" %}
+                    <tr id="{{ i }}" onclick="add_play('{{ music[i].music_name }}', '{{ music[i].music_artist }}');">
+                        <td >{{ i }}</td>
+                        <td>{{ music[i]['music_name'] }}</td>
+                        <td>{{ music[i]['music_artist'] }}</td>
+                        <td>{{ music[i]['music_album'] }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div style="height: 100px;"></div>
+<div id="aplayer"></div>
+
+{% endblock %}
+
+{% block end %}
+{% if music != [] %}
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+<script>
+    function jz(){
+        mui.alert("搜索的时间可能较长\n请耐心等待~");
+    }
+
+    var music = ["{{ music['1']['music_name'] }}"];
+
+    var getRandomColor = function(){    
+        return  '#' + (function(color){    
+            return (color +=  '0123456789abcdef'[Math.floor(Math.random()*16)])    
+            && (color.length == 6) ?  color : arguments.callee(color);    
+        })('');    
+    };
+
+    const ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        fixed: true,
+        autoplay: false,
+        volume: 0.6,
+        mutex: true,
+        order: 'list',
+        preload: 'metadata',
+        audio: [{
+            name: music[0],
+            artist: "{{ music['1']['music_artist'] }}",
+            url: "/static/music/"+music[0]+".mp3",
+            cover: "/static/music/img/"+music[0].replace(/\s+/g,"_")+".jpg",
+            theme: getRandomColor()
+        }]
+    });
+    function add_play(name, artist) {
+        if (music.indexOf(name) == -1)
+        {
+            music.push(name);
+            ap.list.add([
+                {
+                    name: name,
+                    artist: artist,
+                    url: '/static/music/'+name+'.mp3',
+                    cover: '/static/music/img/'+name.replace(/\s+/g,"_")+'.jpg',
+                    theme: getRandomColor()
+                }
+            ]);
+            ap.list.switch(music.indexOf(name));
+            ap.play();
+        }
+        else
+        {
+            ap.list.switch(music.indexOf(name));
+            ap.play();
+        }
+    };
+</script>
+{% endif %}
+{% endblock %}

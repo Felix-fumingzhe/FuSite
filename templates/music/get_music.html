@@ -1,0 +1,142 @@
+{% extends 'index.html' %}
+
+{% block title %}
+FuSite-音乐
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="box mt-6 ml-6 mr-6">
+    <form action="/music/get_music" method="get">
+        <div class="field has-addons mt-3 ml-3">
+            <div class="control is-expanded">
+                <input class="input is-rounded is-fullwidth is-primary" name="music_name" type="text" placeholder="请输入要搜索的歌名" value="{{ music_name }}">
+            </div>
+            <div class="control is-expanded">
+                <input type="submit" class="button is-primary is-rounded" style="width: 10vw;" value="搜索">
+            </div>
+        </div>
+        <br>
+    </form>
+	{% if music != None %}
+    <div class="table-container">
+        <table class="table is-hoverable is-fullwidth">
+            <thead>
+                <tr>
+                    <th title="序号">序号</th>
+                    <th title="歌名">歌名</th>
+                    <th title="歌手">歌手</th>
+                    <th title="专辑">专辑</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th title="序号">序号</th>
+                    <th title="歌名">歌名</th>
+                    <th title="歌手">歌手</th>
+                    <th title="专辑">专辑</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            {% for i in music %}
+                <tr id="{{ i }}" onclick="add_play('{{ music[i].music_name }}','{{ music[i].music_picUrl }}','{{ music[i].music_url }}','{{ music[i].music_artist }}');">
+                    <td >{{ i }}</td>
+                    <td>{{ music[i]['music_name'] }}</td>
+                    <td>{{ music[i]['music_artist'] }}</td>
+                    <td>{{ music[i]['music_album'] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+	{% else %}
+		<h1 class="title has-text-centered has-text-wight-bold is-size-3 has-text-danger" style="margin-top: 1em;">暂未找到{{ music_name }}这首歌</h1>
+    <br><br>
+    {% endif %}
+</div>
+
+<div style="height: 100px;"></div>
+<div id="aplayer"></div>
+
+{% endblock %}
+
+{% block end %}
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    {% if music != None %}
+    var music = [["{{ music['1']['music_name'] }}", "{{ music['1']['music_url'] }}"]];
+
+    var getRandomColor = function(){    
+        return  '#' + (function(color){
+            return (color +=  '0123456789abcdef'[Math.floor(Math.random()*16)])    
+            && (color.length == 6) ?  color : arguments.callee(color);    
+        })('');    
+    };
+
+    var arrayHasElement = function(array, element) { 
+        var num = 0;
+        for (var el of array) {
+            num++;
+            if (el.length === element.length) {
+                for (var index in el) {
+                    if (el[index] !== element[index]) {
+                        break;
+                    }
+                    if (index == (el.length - 1)) {
+                        return num;
+                    }
+                }
+            }
+        }
+    return false;
+    }
+    $.post("/music/get_music_url", {"music_url": "{{ music['1'].music_url }}".replace(/amp;/,"")}, function(data){
+        ap = new APlayer({
+            container: document.getElementById('aplayer'),
+            fixed: true,
+            autoplay: true,
+            volume: 0.6,
+            mutex: true,
+            order: 'list',
+            preload: 'metadata',
+            audio: [{
+                name: music[0][0],
+                artist: "{{ music['1']['music_artist'] }}",
+                url: data.music_url,
+                cover: "{{ music['1']['music_picUrl'] }}",
+                theme: getRandomColor()
+            }]
+        });
+    });
+
+    function add_play(name, pic_url, music_url, artist) {
+        if (arrayHasElement(music, [name, music_url]) == false)
+        {
+            music.push([name, music_url]);
+            $.post("/music/get_music_url", {"music_url":music_url }, function(data) {
+                ap.list.add([
+                    {
+                        name: name,
+                        artist: artist,
+                        url: data.music_url,
+                        cover: pic_url,
+                        theme: getRandomColor()
+                    }
+                ]);
+            })
+            ap.list.switch(arrayHasElement(music, [name, music_url])-1);
+            ap.play();
+        }
+        else
+        {
+            ap.list.switch(arrayHasElement(music, [name, music_url])-1);
+            ap.play();
+        }
+    };
+    {% endif %}
+</script>
+{% endblock %}

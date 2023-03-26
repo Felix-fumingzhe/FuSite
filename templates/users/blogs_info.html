@@ -1,0 +1,41 @@
+{% extends 'users/profile.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content_title %}
+<li class="is-active"><a>博客管理</a></li>
+{% endblock %}
+
+{% block users %}
+
+{% endblock %}
+
+{% block content %}
+{% if blogs != [] %}
+    {% for blog in blogs %}
+        <div class="box">
+            <h1 class="is-size-5 has-text-weight-bold" onclick="window.open('/blogs/{{ blog.文章id }}')">
+                <a>{{ blog['标题'] }}</a>
+            </h1>
+            <a class="is-pulled-right is-size-6 has-text-danger button" href="?delete=delete&id={{ blog['文章id'] }}">
+                删除文章
+            </a>
+            <a class="is-pulled-right is-size-6 has-text-primary button" href="/users/editor_blog?id={{ blog['文章id'] }}">
+                修改文章
+            </a>
+            <div class="is-size-7 has-text-grey-light pt-1 pb-1">
+                <span>{{ blog['上传日期']|handle_time }}发布</span> <span>{{ blog['修改日期']|handle_time }}修改</span> <span>浏览量:{{ blog['浏览量'] }}</span>
+            </div>
+            <p class="mt-3">{{ blog['描述'] }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+<div class="box">
+    <h1 class="title has-text-danger is-size-4">暂未添加博客!</h1>
+</div>
+{% endif %}
+
+
+{% endblock %}

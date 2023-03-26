@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>{% block title %} FuSite-管理员主页 {% endblock %}</title>
+    <link rel="stylesheet" href="https://fu-mingzhe.github.io/static/css/min_mui.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    {% block head %}
+
+    {% endblock %}
+</head>
+
+<body>
+<div class="pt-6">
+    <nav class="navbar is-success container" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/admin/index">
+                <img src="/static/images/logo.png" width="112" height="28">
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/admin/index">
+                    首页
+                </a>
+                <a class="navbar-item" href="/admin/blog">
+                    博客管理
+                </a>
+                <a class="navbar-item" href="/admin/music">
+                    音乐管理
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a href="/admin/login_out" class="button is-success">退出</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+{% block content %}
+<div class="box mt-6 ml-6 mr-6">
+    <form action="" method="post">
+        <input type="hidden" name="type" value="search">
+        <div class="field has-addons">
+            <div class="control is-expanded">
+                <input class="input is-rounded is-fullwidth is-success" name="search_content" type="text" placeholder="请输入要搜索的用户" required value="{{ search_content }}">
+            </div>
+            <div class="control is-expanded">
+                <input type="submit" class="button is-success is-rounded" style="width: 10vw;" value="搜索">
+            </div>
+        </div>
+    </form>
+    {% if users != [] %}
+        <form action="" method="post">
+            <input type="hidden" name="type" value="submit">
+            <div class="table-container">
+            <table class="table is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th title="序号">序号</th>
+                        <th title="用户名">用户名</th>
+                        <th title="邮箱">邮箱</th>
+                        <th title="用户ID">用户ID</th>
+                        <th title="权限">权限</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th title="序号">序号</th>
+                        <th title="用户名">用户名</th>
+                        <th title="邮箱">邮箱</th>
+                        <th title="用户ID">用户ID</th>
+                        <th title="权限">权限</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                {% for i in range(users|length) %}
+                    <tr id="{{ users[i]['用户名'] }}">
+                            <th onclick="window.open('/admin_users/{{ users[i].用户名 }}')">{{ i+1 }}</th>
+                            <th onclick="window.open('/admin_users/{{ users[i].用户名 }}')">{{ users[i]['用户名'] }}</th>
+                            <th onclick="window.open('/admin_users/{{ users[i].用户名 }}')">{{ users[i]['邮箱'] }}</th>
+                            <th onclick="window.open('/admin_users/{{ users[i].用户名 }}')">{{ users[i]['用户id'] }}</th>
+                        <th class="control">
+                            <label class="radio">
+                                {% if users[i]['权限'] == 1 %}
+                                    <input type="radio" name="{{ users[i]['用户名'] }}_qx" checked value="1">
+                                {% else %}
+                                    <input type="radio" name="{{ users[i]['用户名'] }}_qx" value="1">
+                                {% endif %}
+                                普通账号
+                            </label>
+                            <label class="radio">
+                                {% if users[i]['权限'] == 2 %}
+                                    <input type="radio" name="{{ users[i]['用户名'] }}_qx" checked value="2">
+                                {% else %}
+                                    <input type="radio" name="{{ users[i]['用户名'] }}_qx" value="2">
+                                {% endif %}
+                                禁用账号
+                            </label>
+                            <label class="radio">
+                                {% if users[i]['权限'] == 3 %}
+                                    <input type="radio" name="{{ users[i]['用户名'] }}_qx" checked value="3">
+                                {% else %}
+                                    <input type="radio" name="{{ users[i]['用户名'] }}_qx" value="3">
+                                {% endif %}
+                                管理员
+                            </label>
+                        </th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+            <input type="submit" class="button is-success is-fullwidth">
+        </form>
+    {% else %}
+        <h1 class="title has-text-centered has-text-wight-bold is-size-3 has-text-danger" style="margin-top: 1em;margin-bottom:1em;">暂未搜索到关于{{ search_content }}的用户</h1>
+    {% endif %}
+</div>
+
+{% endblock %}
+{% block end %}
+
+{% endblock %}
+<script src="https://cdn.bootcdn.net/ajax/libs/mui/3.7.1/js/mui.min.js"></script>
+<script>
+    if("{{ admin_text }}" != ""){
+        mui.alert("{{ admin_text }}");
+    }
+    var navbar_menu = mui(".navbar-menu")[0]
+    mui(".navbar-burger")[0].addEventListener("tap",function(){
+        this.classList.toggle("is-active");
+        navbar_menu.classList.toggle("is-active");
+    })
+</script>
+</body>
+
+</html>

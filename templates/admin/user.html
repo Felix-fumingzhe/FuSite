@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>FuSite-管理-用户{{ user.用户名 }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+    <div class="box mt-6 ml-6 mr-6 pt-6">
+        <div class="is-radiusless is-shadowless">
+            <div class="columns is-mobile" style="border-bottom: #ededed solid 1px; padding-bottom: 1rem">
+                <div class="column is-narrow">
+                    <figure class="image is-96x96">
+                        {% if user.头像 == "" %}
+                        <img class="is-rounded" src="/static/images/avatar.png">
+                        {% else %}
+                        <img class="is-rounded" src="/static/images/users/{{ user.用户名 }}.png">
+                        {% endif %}
+                    </figure>
+                </div>
+                <div class="column is-narrow">
+                    <div style="padding-top: 1.5rem;">
+                        <h1 class="title is-size-4">{{ user.用户名 }}</h1>
+                        {% if user.个性签名 == "" %}
+                        <p class="subtitle is-size-6">暂未设置个性签名</p>
+                        {% else %}
+                        <p class="subtitle is-size-6">{{ user.个性签名 }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="columns" style="padding:1rem 0; ">
+                <div class="column is-2">
+                    <p>个人信息</p>
+                </div>
+                <div class="column">
+                    <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                        <div class="column is-2">
+                            <span class=" has-text-grey-light">用户名</span>
+                        </div>
+                        <div class="column is-narrow">
+                            <span class=" has-text-black-ter">{{ user.用户名 }}</span>
+                        </div>
+                    </div>
+                    <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                        <div class="column is-2">
+                            <span class="has-text-grey-light">邮箱</span>
+                        </div>
+                        <div class="column is-narrow">
+                            <span class="has-text-black-ter">{{ user.邮箱 }}</span>
+                        </div>
+                    </div>
+                    <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                        <div class="column is-2">
+                            <span class="has-text-grey-light">权限</span>
+                        </div>
+                        <div class="column is-narrow">
+                            {% if user.权限 == 1 %}
+                            <span class="has-text-black-ter">普通账号</span>
+                            {% elif user.权限 == 2 %}
+                            <span class="has-text-black-ter">禁用账号</span>
+                            {% else %}
+                            <span class="has-text-black-ter">管理员</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                        <div class="column is-2">
+                            <span class=" has-text-grey-light">手机号</span>
+                        </div>
+                        <div class="column is-narrow">
+                            {% if user.手机号 == "" %}
+                            <span class="has-text-black-ter">暂未设置</span>
+                            {% else %}
+                            <span class="has-text-black-ter">{{ user.手机号 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                        <div class="column is-2">
+                            <span class=" has-text-grey-light">性别</span>
+                        </div>
+                        <div class="column is-narrow">
+                            {% if user.性别 == "" %}
+                            <span class="has-text-black-ter">暂未设置</span>
+                            {% else %}
+                            <span class="has-text-black-ter">{{ user.性别 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                        <div class="column is-2">
+                            <span class=" has-text-grey-light">生日</span>
+                        </div>
+                        <div class="column is-narrow">
+                            {% if user.生日 == "" %}
+                            <span class="has-text-black-ter">暂未设置</span>
+                            {% else %}
+                            <span class="has-text-black-ter">{{ user.生日 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                        <div class="column is-2">
+                            <span class=" has-text-grey-light">年龄</span>
+                        </div>
+                        <div class="column is-narrow">
+                            {% if user.年龄 == "" %}
+                            <span class="has-text-black-ter">暂未设置</span>
+                            {% else %}
+                            <span class="has-text-black-ter">{{ user.年龄 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                        <div class="column is-2">
+                            <span class=" has-text-grey-light">爱好</span>
+                        </div>
+                        <div class="column is-narrow">
+                            {% if user.爱好 == "" %}
+                            <span class="has-text-black-ter">暂未设置</span>
+                            {% else %}
+                            <span class="has-text-black-ter">{{ user.爱好 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                        <div class="column is-2">
+                            <span class="has-text-grey-light">地址</span>
+                        </div>
+                        <div class="column is-narrow">
+                            {% if user.地址 == "" %}
+                            <span class="has-text-black-ter">暂未设置</span>
+                            {% else %}
+                            <span class="has-text-black-ter">{{ user.地址 }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns" style="padding:1rem 0; ">
+                <div class="column is-2">
+                    <p>个人简介</p>
+                </div>
+                <div class="column">
+                    <div class="content">
+                        {% if user.个人简介 == "" %}
+                        暂未设置
+                        {% else %}
+                        {{ user.个人简介 }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="margin-top: 3em;">
+        {% if user.个人主页 != None %}
+            <h1 class="title has-text-wight-bold is-size-5" style="margin-top: 3em;">个人主页</h1>
+            {{ user.个人主页|safe }}
+        {% else %}
+            <h1 class="title has-text-wight-bold is-size-5 has-text-danger" style="margin-top: 3em; margin-bottom: 1em;">暂未设置个人主页</h1>
+        {% endif %}
+        {% if user.历史记录 != [] %}
+            <h1 class="title has-text-wight-bold is-size-5" style="margin-top: 3em;">历史记录</h1>
+            {% for i in user.历史记录 %}
+                <p class="title is-size-7">{{ i["date"] }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ i["path"] }}</p>
+            {% endfor %}
+            <div style="margin-bottom: 2em;"></div>
+        {% else %}
+            <h1 class="title has-text-wight-bold is-size-5 has-text-danger" style="margin-top: 3em; margin-bottom: 1em;">暂未有历史记录</h1>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>FuSite-个人中心</title>
+    <link rel="stylesheet" href="https://fu-mingzhe.github.io/static/css/min_mui.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <style>
+        html,
+        body {
+            background-color: aliceblue;
+        }
+    </style>
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="/" class="navbar-item">
+                    <img src="/static/images/logo.png" width="112" height="28" alt="logo">
+                </a>
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="dropdown is-hoverable">
+                            <div class="dropdown-trigger">
+                                <button class="button is-white">
+                                    <figure class="image is-24x24">
+                                        {% if 头像 == "" %}
+                                        <img class="is-rounded" src="/static/images/avatar.png" alt="" srcset="">
+                                        {% else %}
+                                        <img class="is-rounded" src="/static/images/users/{{ 用户名 }}.png" alt="" srcset="">
+                                        {% endif %}
+                                    </figure>&nbsp;&nbsp;
+                                    <span class="has-text-grey-dark">{{ 用户名 }}</span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+                                <div class="dropdown-content is-shadowless">
+                                    <div class="dropdown-item">
+                                        <a class=" has-text-grey-dark" href="/users/profile_editor">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-address-card" aria-hidden="true"></i>
+                                            </span>&nbsp;&nbsp;
+                                            修改个人信息
+                                        </a>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <a class=" has-text-grey-dark" href="/users/add_blog">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-edit" aria-hidden="true"></i>
+                                            </span>&nbsp;&nbsp;
+                                            添加博客
+                                        </a>
+                                    </div>
+                                    <hr class="dropdown-divider">
+                                    <div class="dropdown-item">
+                                        <a class=" has-text-grey-dark" href="/users/login_out">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-power-off" aria-hidden="true"></i>
+                                            </span>&nbsp;&nbsp;
+                                            退出登录
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-2">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">个人中心</p>
+                            <a href="" class="card-header-icon" aria-label="more options">
+                                <span class="icon">
+                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </header>
+                        <div class="card-content menu">
+                            <ul class="content menu-list">
+                                <li><a href="/users/profile">个人信息</a></li>
+                                <li><a href="/users/profile_editor">修改信息</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">信息管理</p>
+                            <a href="#" class="card-header-icon" aria-label="more options">
+                                <span class="icon">
+                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </header>
+                        <div class="card-content menu">
+                            <ul class="content menu-list">
+                                <li><a href="/users/profile_home">编辑个人主页</a></li>
+                                <li><a href="/users/change_username">更改用户名</a></li>
+                                <li><a href="/users/change_email">更改邮箱</a></li>
+                                <li><a href="/users/change_password">修改密码</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">博客管理</p>
+                            <a href="#" class="card-header-icon" aria-label="more options">
+                                <span class="icon">
+                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </header>
+                        <div class="card-content menu">
+                            <ul class="content menu-list">
+                                <li><a href="/users/add_blog">添加博客</a></li>
+                                <li><a href="/users/blogs_info">博客管理</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-10">
+                    <div class="box is-radiusless is-shadowless">
+                        <div class="tabs">
+                            <ul>
+                                {% block content_title %}
+                                <li class="is-active"><a>账号信息</a></li>
+                                {% endblock %}
+                            </ul>
+                        </div>
+                        {% block users %}
+                        <div class="columns is-mobile" style="border-bottom: #ededed solid 1px; padding-bottom: 1rem">
+                            <div class="column is-narrow">
+                                <figure class="image is-96x96">
+                                    {% if 头像 == "" %}
+                                    <img class="is-rounded" src="/static/images/avatar.png">
+                                    {% else %}
+                                    <img class="is-rounded" src="/static/images/users/{{ 用户名 }}.png">
+                                    {% endif %}
+                                </figure>
+                            </div>
+                            <div class="column is-narrow">
+                                <div style="padding-top: 1.5rem;">
+                                    <h1 class="title is-size-4">{{ 用户名 }}</h1>
+                                    {% if 个性签名 == "" %}
+                                    <p class="subtitle is-size-6">暂未设置个性签名</p>
+                                    {% else %}
+                                    <p class="subtitle is-size-6">{{ 个性签名 }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endblock %}
+                        {% block content %}
+                        <div class="columns" style="padding:1rem 0; ">
+                            <div class="column is-2">
+                                <p>个人信息</p>
+                            </div>
+                            <div class="column">
+                                <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                                    <div class="column is-2">
+                                        <span class=" has-text-grey-light">用户名</span>
+                                    </div>
+                                    <div class="column is-narrow">
+                                        <span class=" has-text-black-ter">{{ 用户名 }}</span>
+                                    </div>
+                                </div>
+                                <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                                    <div class="column is-2">
+                                        <span class="has-text-grey-light">邮箱</span>
+                                    </div>
+                                    <div class="column is-narrow">
+                                        <span class="has-text-black-ter">{{ 邮箱 }}</span>
+                                    </div>
+                                </div>
+                                <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                                    <div class="column is-2">
+                                        <span class=" has-text-grey-light">手机号</span>
+                                    </div>
+                                    <div class="column is-narrow">
+                                        {% if 手机号 == "" %}
+                                        <span class="has-text-black-ter">暂未设置</span>
+                                        {% else %}
+                                        <span class="has-text-black-ter">{{ 手机号 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                                    <div class="column is-2">
+                                        <span class=" has-text-grey-light">性别</span>
+                                    </div>
+                                    <div class="column is-narrow">
+                                        {% if 性别 == "" %}
+                                        <span class="has-text-black-ter">暂未设置</span>
+                                        {% else %}
+                                        <span class="has-text-black-ter">{{ 性别 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                                    <div class="column is-2">
+                                        <span class=" has-text-grey-light">生日</span>
+                                    </div>
+                                    <div class="column is-narrow">
+                                        {% if 生日 == "" %}
+                                        <span class="has-text-black-ter">暂未设置</span>
+                                        {% else %}
+                                        <span class="has-text-black-ter">{{ 生日 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                                    <div class="column is-2">
+                                        <span class=" has-text-grey-light">年龄</span>
+                                    </div>
+                                    <div class="column is-narrow">
+                                        {% if 年龄 == "" %}
+                                        <span class="has-text-black-ter">暂未设置</span>
+                                        {% else %}
+                                        <span class="has-text-black-ter">{{ 年龄 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                                    <div class="column is-2">
+                                        <span class=" has-text-grey-light">爱好</span>
+                                    </div>
+                                    <div class="column is-narrow">
+                                        {% if 爱好 == "" %}
+                                        <span class="has-text-black-ter">暂未设置</span>
+                                        {% else %}
+                                        <span class="has-text-black-ter">{{ 爱好 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="columns is-mobile" style="border-bottom: #ededed solid 1px">
+                                    <div class="column is-2">
+                                        <span class="has-text-grey-light">地址</span>
+                                    </div>
+                                    <div class="column is-narrow">
+                                        {% if 地址 == "" %}
+                                        <span class="has-text-black-ter">暂未设置</span>
+                                        {% else %}
+                                        <span class="has-text-black-ter">{{ 地址 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columns" style="padding:1rem 0; ">
+                            <div class="column is-2">
+                                <p>个人简介</p>
+                            </div>
+                            <div class="column">
+                                <div class="content">
+                                    {% if 个人简介 == "" %}
+                                    暂未设置
+                                    {% else %}
+                                    {{ 个人简介 }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/mui/3.7.1/js/mui.min.js"></script>
+    {% block end %}
+    {% endblock %}
+    <script>
+        mui.init();
+        if("{{ profile_text }}" != ""){
+            mui.alert("{{ profile_text }}");
+        }
+        var navbar_menu = mui(".navbar-menu")[0];
+        mui(".navbar-burger")[0].addEventListener("tap",function(){
+            this.classList.toggle("is-active");
+            navbar_menu.classList.toggle("is-active");
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title>正月朗诵活动报名</title>
+        <link rel="stylesheet" href="https://fu-mingzhe.github.io/static/css/min_mui.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css">
+    </head>
+    <body>
+        <div class="box mt-6 ml-3 mr-3">
+            <h1 class="title has-text-centered is-size-1">正月朗诵活动报名</h1>
+            <form action="" method="post">
+                <div style="margin-top: 1em;">
+                    <label>姓名:</label>
+                    <input type="text" class="input" placeholder="请输入你的姓名" required name="name">
+                </div>
+                <div style="margin-top: 1em;">
+                    <label for="">要报名的角色:</label>
+                    <input type="text" class="input" placeholder="请输入你想要报名的角色" required name="role">
+                </div>
+                <input type="submit" class="button is-fullwidth is-info" style="margin-top: 1em;" value="报名">
+            </form>
+        </div>
+        <div class="box mt-6 ml-3 mr-3">
+            <h1 class="title has-text-centered is-size-2">活动策划</h1>
+            <img src="/static/images/test/1.jpg" alt="">
+            <img src="/static/images/test/2.jpg" alt="">
+            <img src="/static/images/test/3.jpg" alt="">
+            <img src="/static/images/test/4.jpg" alt="">
+            <img src="/static/images/test/5.jpg" alt="">
+        </div>
+        <div class="box mt-6 ml-3 mr-3">
+            <h1 class="title has-text-centered is-size-2">报名名单</h1>
+            <table class="table is-hoverable is-striped is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>角色</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>姓名</th>
+                        <th>角色</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for i in bao %}
+                    <tr>
+                        <td>{{ i.name }}</td>
+                        <td>{{ i.role }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <script src="https://cdn.bootcdn.net/ajax/libs/mui/3.7.1/js/mui.min.js"></script>
+        <script>
+            if ( "{{ text }}" == "True") {
+                mui.init();
+                mui.alert("报名成功");
+            }
+        </script>
+    </body>
+</html>

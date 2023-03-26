@@ -1,0 +1,103 @@
+{% extends 'blog/index.html' %}
+{% block section %}
+{% block archives %}{% endblock %}
+
+{% if blogs != {} %}
+<div class="box is-shadowless is-radiusless">
+    关于 {{ keyword }} 的文章
+    <div class="tags has-addons is-pulled-right">
+        <span class="tag">共</span>
+        <span class="tag is-primary">{{ all }} 篇</span>
+    </div>
+</div>
+{% for blog in blogs[page] %}
+    <div class="box" onclick="window.open('/blogs/{{ blog['文章id'] }}')">
+        <h1 class="is-size-5 has-text-weight-bold">
+            <a>{{ blog['标题'] }}</a>
+        </h1>
+        <div class="is-size-7 has-text-grey-light pt-1 pb-1">
+            <span class="mr-3">作者:{{ blog['作者'] }}</span> <span>{{ blog['上传日期']|handle_time }}发布</span> <span>{{ blog['修改日期']|handle_time }}修改</span> <span>浏览量:{{ blog['浏览量'] }}</span>
+        </div>
+        <p class="mt-3">{{ blog['描述'] }}</p>
+    </div>
+{% endfor %}
+<nav class="pagination is-centered" role="navigation">
+    {% if page != 1 %}
+        <a class="pagination-previous" href="?page={{ page-1 }}&keyword={{ keyword }}">上一页</a>
+    {% else %}
+        <a class="pagination-previous" href="" style="visibility: hidden;">上一页</a>
+    {% endif %}
+    {% if page != pages %}
+        <a class="pagination-next" href="?page={{ page+1 }}&keyword={{ keyword }}">下一页</a>
+    {% else %}
+        <a class="pagination-next" href="" style="visibility: hidden;">下一页</a>
+    {% endif %}
+    <ul class="pagination-list">
+        <li>
+            <a class="pagination-link" href="?page=1&keyword={{ keyword }}">1</a>
+        </li>
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        {% if pages == 1 %}
+        <li>
+            <a class="pagination-link is-current" href="?page=1&keyword={{ keyword }}">1</a>
+        </li>
+        {% elif pages == 2 %}
+        <li>
+            {% if page == 1 %}
+                <a class="pagination-link is-current" href="?page=1&keyword={{ keyword }}">1</a>
+            {% else %}
+                <a class="pagination-link" href="?page=1&keyword={{ keyword }}">1</a>
+            {% endif %}
+        </li>
+        <li>
+            {% if page == 2 %}
+                <a class="pagination-link is-current" href="?page=2&keyword={{ keyword }}">2</a>
+            {% else %}
+                <a class="pagination-link" href="?page=2&keyword={{ keyword }}">2</a>
+            {% endif %}
+        </li>
+        {% else %}
+        <li>
+            {% if page == 1 %}
+                <a class="pagination-link is-current" href="?page=1&keyword={{ keyword }}">1</a>
+            {% elif page == pages %}
+                <a class="pagination-link" href="?page={{ page-2 }}&keyword={{ keyword }}">{{ page-2 }}</a>
+            {% else %}
+                <a class="pagination-link" href="?page={{ page-1 }}&keyword={{ keyword }}">{{ page-1 }}</a>
+            {% endif %}
+        </li>
+        <li>
+            {% if page == 1 %}
+                <a class="pagination-link" href="?page=2&keyword={{ keyword }}">2</a>
+            {% elif page == pages %}
+                <a class="pagination-link" href="?page={{ page-1 }}&keyword={{ keyword }}">{{ page-1 }}</a>
+            {% else %}
+                <a class="pagination-link is-current" href="?page={{ page }}&keyword={{ keyword }}">{{ page }}</a>
+            {% endif %}
+        </li>
+        <li>
+            {% if page == 1 %}
+                <a class="pagination-link" href="?page=3&keyword={{ keyword }}">3</a>
+            {% elif page == pages %}
+                <a class="pagination-link is-current" href="?page={{ page }}&keyword={{ keyword }}">{{ page }}</a>
+            {% else %}
+                <a class="pagination-link" href="?page={{ page+1 }}&keyword={{ keyword }}">{{ page+1 }}</a>
+            {% endif %}
+        </li>
+        {% endif %}
+        <li>
+            <span class="pagination-ellipsis">&hellip;</span>
+        </li>
+        <li>
+            <a class="pagination-link" href="?page={{ pages }}&keyword={{ keyword }}">{{ pages }}</a>
+        </li>
+    </ul>
+</nav>
+{% else %}
+    <div class="box">
+        <h1 class="title has-text-danger is-size-4">暂未搜索到关于{{ keyword }}的文章</h1>
+    </div>
+{% endif %}
+{% endblock %}

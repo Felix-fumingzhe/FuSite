@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+
+{% block title %}
+FuSite-工具-翻译
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div class="box box mt-6 ml-6 mr-6">
+    <form action="" method="get">
+        <div style="text-align:center;">
+            <div class="select is-small is-warning">
+                <select name="from" required>
+                    {% if from %}
+                        {% if from == "自动检测" %}
+                            <option value="自动检测" selected>自动检测</option>
+                        {% else %}
+                            <option value="自动检测">自动检测</option>
+                        {% endif %}
+                        {% for i in list %}
+                            {% if from == i %}
+                                <option value="{{i}}" selected>{{i}}</option>
+                            {% else %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <option value="自动检测">自动检测</option>
+                        {% for i in list %}
+                            <option value="{{i}}">{{i}}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+                <img src="/static/images/conversion.png" style="width: 15px;height: 15px;">
+            <div class="select is-small is-warning">
+                <select name="to" required>
+                    {% if to %}
+                        {% for i in list %}
+                            {% if to == i %}
+                                <option value="{{i}}" selected>{{i}}</option>
+                            {% else %}
+                                <option value="{{i}}">{{i}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        {% for i in list %}
+                            <option value="{{i}}">{{i}}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        <textarea class="textarea {{ username|color }} mt-3" name="word" placeholder="请输入要翻译的内容" required>{{ word }}</textarea>
+        <input type="submit" class="button is-fullwidth mt-3" value="提交">
+        {% if f_word %}
+            <textarea class="textarea {{ username|color }} mt-3" readonly>{{ f_word }}</textarea>
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}
