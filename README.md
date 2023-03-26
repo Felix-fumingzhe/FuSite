@@ -1,9 +1,11 @@
 # Flask-FuSite
 
+
 ## 介绍
 
 基于flask和MongoDB的简易的多功能网站
 主要功能有音乐搜索和博客
+本项目是[flask-website](https://gitee.com/fu-mingzhe/flask-website)的升级版
 
 
 ## 代码架构
@@ -17,10 +19,10 @@
     <li>requirements.txt  安装文件</li>
 </ul>
 
-</br>
+<br>
 
 ### 安装教程和使用说明见[Wiki](https://gitee.com/fu-mingzhe/FuSite/wikis/Home)
-<h3><div style="color: red;">注意</div> 你需要完成安装教程的所有步骤才可以运行</h3>
+### 你需要完成安装教程的所有步骤才可以运行
 
 </br>
 </br>
