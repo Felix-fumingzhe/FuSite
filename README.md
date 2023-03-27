@@ -8,7 +8,7 @@
 主要功能有音乐搜索和博客
 
 本项目是[flask-website](https://gitee.com/fu-mingzhe/flask-website)的升级版
-## [FuSite网站](https://fumingzhe.mynatapp.cc)
+## [FuSite的线上DEMO](https://fumingzhe.mynatapp.cc)
 
 ## 代码架构
 
