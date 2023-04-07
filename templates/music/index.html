@@ -64,10 +64,6 @@ FuSite-音乐
 {% if music != [] %}
 <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
 <script>
-    function jz(){
-        mui.alert("搜索的时间可能较长\n请耐心等待~");
-    }
-
     var music = ["{{ music['1']['music_name'] }}"];
 
     var getRandomColor = function(){    
