@@ -58,7 +58,7 @@ def before():
         return redirect("/users/login")
 
 @app.template_filter("jscdn")
-def sdn(name):
+def cdn(name):
     if name == "bulma":
         return "https://cdn.bootcdn.net/ajax/libs/bulma/0.9.4/css/bulma.min.css"
     elif name == "ionicons":
