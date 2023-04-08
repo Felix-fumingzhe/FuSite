@@ -1,7 +1,7 @@
 # encoding = utf-8
 
 from flask import Blueprint, render_template, request, redirect, session, abort, jsonify
-from main_settings import init_session, client_users, client_blog, client_music, PAGE, directory, get_now_music
+from main_settings import init_session, client_users, client_blog, client_music, PAGE, directory, empty_history, get_now_music
 import eyed3
 import datetime
 import hashlib
@@ -101,12 +101,19 @@ def admin_index():
 @admin_app.route("/admin_users/<username>")
 def admin_users(username):
     user = client_users.find_one({"用户名": username})
+    context = {
+        "user": user
+    }
     if user is not None:
+        if request.args.get("remove") == "remove":
+            empty_history(username)
+            session["empty_text"] = "成功清空历史记录"
+            return redirect("/admin_users/"+username)
         if user["个人主页"].isspace() or user["个人主页"] == "":
             user["个人主页"] = None
-        context = {
-            "user": user
-        }
+        if session.get("empty_text") is not None:
+            context["index_text"] = session["empty_text"]
+            session.pop("empty_text")
         return render_template("admin/user.html", **context)
     else:
         abort(404)

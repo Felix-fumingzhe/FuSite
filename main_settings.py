@@ -57,9 +57,16 @@ def get_now_music():
 
 
 def history():
-    users = client_users.find_one({"用户名": session["username"]})
-    users["历史记录"].append({"date": datetime.now().strftime("%y-%m-%d %I:%M:%S"),"path":request.full_path})
-    client_users.update_one({"用户名": session["username"]}, {"$set": users})
+    user = client_users.find_one({"用户名": session["username"]})
+    if user is not None:
+        user["历史记录"].append({"date": datetime.now().strftime("%y-%m-%d %I:%M:%S"),"path":request.full_path})
+        client_users.update_one({"用户名": session["username"]}, {"$set": user})
+
+def empty_history(username):
+    user = client_users.find_one({"用户名": username})
+    if user is not None:
+        user["历史记录"] = []
+        client_users.update_one({"用户名": username}, {"$set": user})
 
 
 for root, dirs, files in os.walk(directory + "static/images/users"):

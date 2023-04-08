@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>FuSite-管理-用户{{ user.用户名 }}</title>
     <link rel="stylesheet" href="https://fu-mingzhe.github.io/static/tinymce/plugins/becodesample/highlight.js-11.5.1/styles/atom-one-light.css">
+    <link rel="stylesheet" href="{{ 'main-css'|jscdn }}">
     <link rel="stylesheet" href="{{ 'bulma'|jscdn }}">
 </head>
 <body>
@@ -164,7 +165,8 @@
             <h1 class="title has-text-wight-bold is-size-5 has-text-danger" style="margin-top: 3em; margin-bottom: 1em;">暂未设置个人主页</h1>
         {% endif %}
         {% if user.历史记录 != [] %}
-            <h1 class="title has-text-wight-bold is-size-5" style="margin-top: 3em;">历史记录</h1>
+            <a class="button is-danger" style="margin-top: 3em;" href="/admin_users/{{ user.用户名 }}?remove=remove">清空历史记录</a>
+            <h1 class="title has-text-wight-bold is-size-5" style="margin-top: 1em;">历史记录</h1>
             {% for i in user.历史记录 %}
                 <p class="title is-size-7">{{ i["date"] }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{ i["path"] }}</p>
             {% endfor %}
@@ -173,5 +175,12 @@
             <h1 class="title has-text-wight-bold is-size-5 has-text-danger" style="margin-top: 3em; margin-bottom: 1em;">暂未有历史记录</h1>
         {% endif %}
     </div>
+    <script src="{{ 'mui'|jscdn }}"></script>
+    <script>
+        mui.init();
+        if("{{ index_text }}" != ""){
+            mui.alert("{{ index_text }}");
+        }
+    </script>
 </body>
 </html>
