@@ -27,13 +27,11 @@
                 {% else %}
                 <input type="checkbox" name="remember" id="remember">
                 {% endif %}
-                记住我
-            </label>
-            <div class="is-pulled-left is-size-6 has-text-danger" style="margin-top: 1em;">
+                <span>记住我</span>
                 {% if error %}
-                    <span>&nbsp;&nbsp;{{ error }}</span>
+                    <div class="is-size-6 has-text-danger" style="margin-top: 1em;"><span><p>&nbsp;&nbsp;{{ error }}</p></span></div>
                 {% endif %}
-            </div>
+            </label>
             <div class="is-pulled-right is-size-6" style="margin-top: 1em;">
                 <a href="/users/forget_password">忘记密码?</a>
                 <span>&nbsp;/&nbsp;</span>
