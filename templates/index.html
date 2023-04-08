@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>{% block title %}FuSite-首页{% endblock %}</title>
     <link rel="stylesheet" href="{{ 'main-css'|jscdn }}">
-    <link rel="stylesheet" href="{{ 'bulma'|jscdn }}">
-    {% block head %}
-    <link rel="stylesheet" href="https://fu-mingzhe.github.io/static/tinymce/plugins/becodesample/highlight.js-11.5.1/styles/atom-one-light.css">
-    {% endblock %}
+    <link rel="stylesheet" href="{{ 'bulma'|jscdn }}"> {% block head %}
+    <link rel="stylesheet" href="https://fu-mingzhe.github.io/static/tinymce/plugins/becodesample/highlight.js-11.5.1/styles/atom-one-light.css"> {% endblock %}
     <link rel="stylesheet" href="{{ 'ionicons'|jscdn }}">
 </head>
+
 <body>
     <div class="pt-6">
         <nav class="navbar is-primary container" role="navigation" aria-label="main navigation">
@@ -19,8 +19,7 @@
                 <a class="navbar-item" href="/">
                     <img src="/static/images/logo.png" width="112" height="28">
                 </a>
-                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
-                    data-target="navbarBasicExample">
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
@@ -38,7 +37,7 @@
                         博客
                     </a>
                     <!--<a class="navbar-item" href="/chat/index">-->
-                        <!--聊天-->
+                    <!--聊天-->
                     <!--</a>-->
                     <a class="navbar-item" href="/tools/index">
                         工具
@@ -59,9 +58,8 @@
     </div>
     {% block content %}
     <div class="box mt-6 ml-6 mr-6">
-        {% if index_content != None %}
-            {{ index_content|safe }}
-            <button class="share">
+        {% if index_content != None %} {{ index_content|safe }}
+        <button class="share">
                 <div class="svg-wrapper-1">
                     <div class="svg-wrapper">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -72,15 +70,15 @@
                 </div>
                 <span>分享主页</span>
             </button>
-            <div class="modal">
-                <div class="modal-background"></div>
-                    <article class="media">
-                            <figure class="image is-128x128">
-                                <img class="modal-image">
-                            </figure>
-                    </article>
-                <button class="modal-close is-large" aria-label="close"></button>
-            </div>
+        <div class="modal">
+            <div class="modal-background"></div>
+            <article class="media">
+                <figure class="image is-128x128">
+                    <img class="modal-image">
+                </figure>
+            </article>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>
         {% else %}
         <h1 class="title has-text-centered has-text-wight-bold is-size-3 has-text-danger" style="margin-top: 1em;margin-bottom:1em;">暂未设置个人主页,您可以前往个人中心设置</h1>
         {% endif %}
@@ -89,25 +87,25 @@
     <script src="{{ 'mui'|jscdn }}"></script>
     <script>
         mui.init();
-        if("{{ index_text }}" != ""){
+        if ("{{ index_text }}" != "") {
             mui.alert("{{ index_text }}");
         }
         var navbar_menu = mui(".navbar-menu")[0];
-        mui(".navbar-burger")[0].addEventListener("tap", function(){
+        mui(".navbar-burger")[0].addEventListener("tap", function() {
             this.classList.toggle("is-active");
             navbar_menu.classList.toggle("is-active");
         })
         var modal = mui(".modal")[0];
         var modal_image = mui(".modal-image")[0];
-        mui(".share")[0].addEventListener("tap", function(){
+        mui(".share")[0].addEventListener("tap", function() {
             modal.classList.toggle("is-active");
             modal_image.src = "https://api.pwmqr.com/qrcode/create/?url=https://fumingzhe.mynatapp.cc/share/{{ id }}";
         })
-        mui(".modal-close")[0].addEventListener("tap", function(){
+        mui(".modal-close")[0].addEventListener("tap", function() {
             modal.classList.toggle("is-active");
         });
     </script>
-    {% block end %}
-    {% endblock %}
+    {% block end %} {% endblock %}
 </body>
+
 </html>
