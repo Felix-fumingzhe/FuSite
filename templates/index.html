@@ -72,6 +72,15 @@
                 </div>
                 <span>分享主页</span>
             </button>
+            <div class="modal">
+                <div class="modal-background"></div>
+                    <article class="media">
+                            <figure class="image is-128x128">
+                                <img class="modal-image">
+                            </figure>
+                    </article>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
         {% else %}
         <h1 class="title has-text-centered has-text-wight-bold is-size-3 has-text-danger" style="margin-top: 1em;margin-bottom:1em;">暂未设置个人主页,您可以前往个人中心设置</h1>
         {% endif %}
@@ -83,11 +92,20 @@
         if("{{ index_text }}" != ""){
             mui.alert("{{ index_text }}");
         }
-        var navbar_menu = mui(".navbar-menu")[0]
-        mui(".navbar-burger")[0].addEventListener("tap",function(){
+        var navbar_menu = mui(".navbar-menu")[0];
+        mui(".navbar-burger")[0].addEventListener("tap", function(){
             this.classList.toggle("is-active");
             navbar_menu.classList.toggle("is-active");
         })
+        var modal = mui(".modal")[0];
+        var modal_image = mui(".modal-image")[0];
+        mui(".share")[0].addEventListener("tap", function(){
+            modal.classList.toggle("is-active");
+            modal_image.src = "https://api.pwmqr.com/qrcode/create/?url=https://fumingzhe.mynatapp.cc/share/{{ id }}";
+        })
+        mui(".modal-close")[0].addEventListener("tap", function(){
+            modal.classList.toggle("is-active");
+        });
     </script>
     {% block end %}
     {% endblock %}
