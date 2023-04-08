@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>FuSite-个人中心</title>
     <link rel="stylesheet" href="https://fu-mingzhe.github.io/static/css/min_mui.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="{{ 'bulma'|jscdn }}">
     <style>
         html,
         body {
@@ -290,8 +290,8 @@
             </div>
         </div>
     </section>
-    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/mui/3.7.1/js/mui.min.js"></script>
+    <script src="{{ 'jquery'|jscdn }}"></script>
+    <script src="{{ 'mui'|jscdn }}"></script>
     {% block end %}
     {% endblock %}
     <script>

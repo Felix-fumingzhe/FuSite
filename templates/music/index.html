@@ -5,7 +5,7 @@ FuSite-音乐
 {% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+<link rel="stylesheet" href="{{ 'APlayer-css'|jscdn }}">
 {% endblock %}
 
 {% block content %}
@@ -62,7 +62,7 @@ FuSite-音乐
 
 {% block end %}
 {% if music != [] %}
-<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+<script src="{{ 'APlayer-js'|jscdn }}"></script>
 <script>
     var music = ["{{ music['1']['music_name'] }}"];
 

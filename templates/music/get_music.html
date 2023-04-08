@@ -5,7 +5,7 @@ FuSite-音乐
 {% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+<link rel="stylesheet" href="{{ 'APlayer-css'|jscdn }}">
 {% endblock %}
 
 {% block content %}
@@ -64,8 +64,8 @@ FuSite-音乐
 {% endblock %}
 
 {% block end %}
-<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
-<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="{{ 'APlayer-js'|jscdn }}"></script>
+<script src="{{ 'jquery'|jscdn }}"></script>
 <script>
     {% if music != None %}
     var music = [["{{ music['1']['music_name'] }}", "{{ music['1']['music_url'] }}"]];

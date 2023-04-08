@@ -57,6 +57,23 @@ def before():
     else:
         return redirect("/users/login")
 
+@app.template_filter("jscdn")
+def sdn(name):
+    if name == "bulma":
+        return "https://cdn.bootcdn.net/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+    elif name == "ionicons":
+        return "https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css"
+    elif name == "mui":
+        return "https://cdn.bootcdn.net/ajax/libs/mui/3.7.1/js/mui.min.js"
+    elif name == "jquery":
+        return "https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"
+    elif name == "APlayer-css":
+        return "https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"
+    elif name == "APlayer-js":
+        return "https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"
+    else:
+        return None
+
 @app.template_filter("strftime")
 def strftime(time):
     if isinstance(time, datetime.datetime):
