@@ -5,7 +5,7 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>{% block title %}FuSite-博客{% endblock %}</title>
-    <link rel="stylesheet" href="https://fu-mingzhe.github.io/static/css/min_mui.css">
+    <link rel="stylesheet" href="{{ 'main-css'|jscdn }}">
     <link rel="stylesheet" href="{{ 'bulma'|jscdn }}">
     {% block head %}
     {% endblock %}

@@ -71,6 +71,8 @@ def sdn(name):
         return "https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"
     elif name == "APlayer-js":
         return "https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"
+    elif name == "main-css":
+        return "https://fu-mingzhe.github.io/static/css/main.css"
     else:
         return None
 
