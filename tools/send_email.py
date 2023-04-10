@@ -22,7 +22,7 @@ def send_email(receiver, name):
     for i in range(6):
         verification += str(random.randint(0, 6))
     template = Template(email_content)
-    template = template.render(name=name, Verification=verification)
+    template = template.render(name=name, Verification=verification, date=datetime.datetime.today().strftime("%Y年%m月%d日"))
     message = MIMEText(template, 'html', 'utf-8')
     multi_msg = MIMEMultipart()
     multi_msg.attach(message)

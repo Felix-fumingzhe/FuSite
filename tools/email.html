@@ -1,58 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta charset="UTF-8">
-    <base target="_blank" />
-    <style type="text/css">::-webkit-scrollbar{ display: none }</style>
-    <style id="cloudAttachStyle" type="text/css">#divNeteaseBigAttach, #divNeteaseBigAttach_bak{display:none;}</style>
-    <style id="blockquoteStyle" type="text/css">blockquote{display:none;}</style>
-    <style type="text/css">
-        body{font-size:14px;font-family:arial,verdana,sans-serif;line-height:1.666;padding:0;margin:0;overflow:auto;white-space:normal;word-wrap:break-word;min-height:100px}
-        td, input, button, select, body{font-family:Helvetica, 'Microsoft Yahei', verdana}
-        pre {white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;while-space:-o-pre-wrap;word-wrap:break-word;width:95%}
-        th, td{font-family:arial, verdana,sans-serif;line-height:1.666}
-        img{ border:0}
-        header, footer, section, aside, article, nav, hgroup,figure, figcaption{display:block}
-        blockquote{margin-right:0px}
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body tabindex="0" role="listitem">
-<table width="700" border="0" align="center" cellspacing="0" style="width:700px;">
-    <tbody>
-    <tr>
-        <td>
-            <div style="width:700px;margin:0 auto;border-bottom:1px solid #ccc;margin-bottom:30px;">
-                <table border="0" cellpadding="0" cellspacing="0" width="700" height="39" style="font:12px Tahoma, Arial, 宋体;">
-                    <tbody><tr><td width="210"></td></tr></tbody>
-                </table>
-            </div>
-            <div style="width:680px;padding:0 10px; margin:0 auto;">
-                <div style="line-height:1.5;font-size:14px;margin-bottom:25px;color:#4d4d4d;">
-                    <strong style="display:block;margin-bottom:15px;">尊敬的用户：{{name}} &nbsp;<span style="color:#color:#f60;font-size: 16px;"></span>您好</strong>
-                    <strong style="display:block;margin-bottom:15px">
-                        您正在进行<span style="color:red;">绑定邮箱</span>操作，请在验证码输入框中输入：<span style="color:#f60;font-size:24px">{{Verification}}</span>，已完成操作。
-                    </strong>
-                </div>
-                <div style="margin-bottom:30px;">
-                    <small style="display:block;margin-bottom:20px;font-size:12px;">
-                        <p style="color:#747474">
-                            注意: 此操作可能会修改您的密码。如非本人操作，请及时登录并修改密码以保账户安全
-                        </p>
-                    </small>
-                </div>
-            </div>
-            <div style="width:700px;margin:0 auto;">
-                <div style="padding:10px 10px 0;border-top:1px solid #ccc;color:#747474;margin-bottom:20px;line-height:1.3em;font-size:12px">
-                    <p>
-                        亲保管好您的邮箱，避免账号被他人盗用
-                    </p>
-                    <p>网站：FuSite</p>
-                </div>
-            </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
+
+<body>
+    <div style="background:#f7f7f7;overflow:hidden">
+        <div style="background:#fff;border:1px solid #ccc;margin:2%;padding:0 30px">
+            <div style="line-height:40px;height:40px">&nbsp;</div>
+            <p style="margin:0;padding:0;font-size:14px;line-height:30px;color:#333;font-family:arial,sans-serif;font-weight:bold">亲爱的用户：</p>
+            <div style="line-height:20px;height:20px">&nbsp;</div>
+            <p style="margin:0;padding:0;line-height:30px;font-size:14px;color:#333;font-family:'宋体',arial,sans-serif">您好！感谢您使用FuSite，您的账号（{{name}}）正在进行邮箱验证，本次请求的验证码为：</p>
+            <p style="margin:0;padding:0;line-height:30px;font-size:14px;color:#333;font-family:'宋体',arial,sans-serif"><b style="font-size:18px;color:#f90"><span style="border-bottom:1px dashed #ccc;z-index:1" onclick="return false;" data="{{ Verification }}">{{ Verification }}</span></b><span style="margin:0;padding:0;margin-left:10px;line-height:30px;font-size:14px;color:#979797;font-family:'宋体',arial,sans-serif">(为了保障您帐号的安全性，请在20分钟内完成验证。)</span></p>
+            <div style="line-height:80px;height:80px">&nbsp;</div>
+            <p style="margin:0;padding:0;line-height:30px;font-size:14px;color:#333;font-family:'宋体',arial,sans-serif">网站:FuSite</p>
+            <p style="margin:0;padding:0;line-height:30px;font-size:14px;color:#333;font-family:'宋体',arial,sans-serif">{{ date }}</p>
+            <div style="line-height:20px;height:20px">&nbsp;</div>
+        </div>
+    </div>
 </body>
+
 </html>
