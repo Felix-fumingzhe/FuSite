@@ -68,9 +68,9 @@ def cdn(name):
     elif name == "jquery":
         return "https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"
     elif name == "APlayer-css":
-        return "https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"
+        return "https://cdn.bootcdn.net/ajax/libs/aplayer/1.10.1/APlayer.min.css"
     elif name == "APlayer-js":
-        return "https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"
+        return "https://cdn.bootcdn.net/ajax/libs/aplayer/1.10.1/APlayer.min.js"
     elif name == "main-css":
         return "https://fu-mingzhe.github.io/static/css/main.css"
     else:
