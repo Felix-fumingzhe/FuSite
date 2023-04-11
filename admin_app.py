@@ -65,7 +65,7 @@ def login_out():
     return redirect("/admin/login")
 
 
-@admin_app.route("/admin")
+@admin_app.route("/admin", methods=["GET", "POST"])
 @admin_app.route("/admin/index", methods=["GET", "POST"])
 def admin_index():
     context = {
