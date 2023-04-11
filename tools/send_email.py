@@ -4,10 +4,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from jinja2 import Template
-from main_settings import directory
 import random
 import datetime
-from main_settings import EMAIL, EMAIL_PASSWORD, SMTP_ADDRESS
+from main_settings import directory, EMAIL, EMAIL_PASSWORD, SMTP_ADDRESS
 
 
 def send_email(receiver, name):
