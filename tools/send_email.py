@@ -17,9 +17,7 @@ def send_email(receiver, name):
     smtp_address = SMTP_ADDRESS
     port = 465
     email_content = open(directory+"tools/email.html", 'r', encoding='utf-8').read()
-    verification = ""
-    for i in range(6):
-        verification += str(random.randint(0, 6))
+    verification = "".join([str(random.randint(0, 9)) for i in range(6)])
     template = Template(email_content)
     template = template.render(name=name, Verification=verification, date=datetime.datetime.today().strftime("%Y年%m月%d日"))
     message = MIMEText(template, 'html', 'utf-8')
