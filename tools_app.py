@@ -50,40 +50,40 @@ def tools_translation():
     return render_template("tools/Translation.html", **context)
 
 
-@tools_app.route("/tools/face_recognition", methods=["GET", "POST"])
-def face_recognition():
-    context = {
-        "username": session["username"]
-    }
-    if request.method == "POST":
-        request.files.get("face_img").save(directory+f"static/images/Face/{session['username']}.png")
-        text = face_info(session["username"])
-        context["text"] = text
-    return render_template("tools/Face_recognition.html", **context)
+# @tools_app.route("/tools/face_recognition", methods=["GET", "POST"])
+# def face_recognition():
+#     context = {
+#         "username": session["username"]
+#     }
+#     if request.method == "POST":
+#         request.files.get("face_img").save(directory+f"static/images/Face/{session['username']}.png")
+#         text = face_info(session["username"])
+#         context["text"] = text
+#     return render_template("tools/Face_recognition.html", **context)
 
 
-@tools_app.route("/tools/idiom_search")
-def idiomSearch():
-    context = {
-        "username": session["username"]
-    }
-    keyword = request.args.get("keyword")
-    if keyword is not None:
-        context["idiom_list"] = idiom_search(keyword)
-        context["keyword"] = keyword
-    return render_template("tools/Idiom_search.html", **context)
+# @tools_app.route("/tools/idiom_search")
+# def idiomSearch():
+#     context = {
+#         "username": session["username"]
+#     }
+#     keyword = request.args.get("keyword")
+#     if keyword is not None:
+#         context["idiom_list"] = idiom_search(keyword)
+#         context["keyword"] = keyword
+#     return render_template("tools/Idiom_search.html", **context)
     
 
-@tools_app.route("/tools/Handwriting")
-def Handwriting():
-    content = {
-        "username": session["username"]
-    }
-    msg = request.args.get("msg")
-    if msg is not None:
-        content["msg"] = msg
-        get_Handwriting(msg)
-    return render_template("tools/Handwriting.html", **content)
+# @tools_app.route("/tools/Handwriting")
+# def Handwriting():
+#     content = {
+#         "username": session["username"]
+#     }
+#     msg = request.args.get("msg")
+#     if msg is not None:
+#         content["msg"] = msg
+#         get_Handwriting(msg)
+#     return render_template("tools/Handwriting.html", **content)
 
 
 # @tools_app.route("/tools/AI_Chat", methods=["GET", "POST"])
