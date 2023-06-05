@@ -21,7 +21,7 @@ Flask-FuSite是一个基于Flask和MongoDB构建的功能强大且丰富的网�
 
 ## 安装和使用说明
 
-要安装和使用Flask-FuSite，请参考[Wiki](https://gitee.com/fu-mingzhe/FuSite/wikis/Home)中提供的详细说明。请务必按照安装指南中的所有步骤来成功运行应用程序。
+要安装和使用FuSite，请参考[Wiki](https://gitee.com/fu-mingzhe/FuSite/wikis/Home)中提供的详细说明。请务必按照安装指南中的所有步骤来成功运行应用程序。
 
 ## 贡献
 
