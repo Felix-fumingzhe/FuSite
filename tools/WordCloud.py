@@ -5,8 +5,7 @@ import numpy as np
 from PIL import Image
 import jieba
 import re
-from flask import session
-from main_settings import directory
+from main_settings import directory, session
 
 
 def cloud(text, img=None):
