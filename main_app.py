@@ -146,26 +146,6 @@ def index():
         return render_template("index.html", **context)
 
 
-@app.route("/share/<id>")
-def share(id):
-    user = client_users.find_one({"用户id": id})
-    if user is not None:
-        content = {
-            "username": user["用户名"],
-            "index_content": user["个人主页"],
-            "Personal_Introduction": user["个人简介"],
-            "age": user["年龄"],
-            "birthday": user["生日"],
-            "sexual": user["性别"],
-            "phone": user["手机号"],
-            "email": user["邮箱"],
-            "head": user["头像"],
-            "Personal_signature": user["个性签名"]
-        }
-        return render_template("share.html", **content)
-    abort(404)
-
-
 @app.route("/upload_images", methods=["POST"])
 def upload_images():
     users_image_dir = directory+"static/images/users/{username}".format(username=session["username"])
