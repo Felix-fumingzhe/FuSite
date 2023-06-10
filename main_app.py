@@ -17,6 +17,7 @@ app = Flask(__name__)
 app.secret_key = key
 
 
+# 注册蓝图
 app.register_blueprint(users_app)
 app.register_blueprint(music_app)
 app.register_blueprint(chat_app)
@@ -28,13 +29,15 @@ app.register_blueprint(tools_app)
 @app.before_request
 def before():
     init_session()
+    # 防止 Python 请求触发页面
     if request.headers.get('User-Agent', 'python').startswith('python'):
         return abort(404)
     if session["login_time"] == 1:
         session.permanent = False
     else:
         session.permanent = True
-        app.permanent_session_lifetime = datetime.timedelta(days=5)
+        app.permanent_session_lifetime = datetime.timedelta(days=7)
+    # 处理不同的请求路径
     if request.path == "/users/login" \
         or request.path == "/users/forget_password" \
         or request.path == "/users/register" \
@@ -59,6 +62,7 @@ def before():
 
 @app.template_filter("jscdn")
 def cdn(name):
+    # 根据名称返回相应的 CDN 链接
     if name == "bulma":
         return "https://cdn.bootcdn.net/ajax/libs/bulma/0.9.4/css/bulma.min.css"
     elif name == "ionicons":
@@ -104,6 +108,7 @@ def handle_time(time):
 
 @app.template_filter("is_admin")
 def is_admin(zz):
+    # 检查是否是管理员
     if zz == session.get("admin_name"):
         return True
     else:
@@ -111,11 +116,13 @@ def is_admin(zz):
 
 @app.template_filter("color")
 def color(username):
+    # 随机选择颜色
     return random.choice(["is-primary", "is-link", "is-info", "is-success", "is-warning", "is-danger"])
 
 
 @app.template_filter("text_color")
 def text_color(name):
+    # 随机选择文本颜色
     return random.choice(["has-text-primary", "has-text-link", "has-text-info", "has-text-success", "has-text-warning", "has-text-danger"])
 
 
@@ -126,6 +133,7 @@ def index():
         "username": session["username"]
     }
     users = client_users.find_one({"用户名": session["username"]})
+    # 处理用户个人主页内容为空的情况
     if users["个人主页"].isspace() or users["个人主页"] == "":
         users["个人主页"] = None
     context["index_content"] = users["个人主页"]
