@@ -18,7 +18,7 @@ FuSite是一个基于Flask和MongoDB的功能强大的多功能网站，提供�
 
 ## 在线演示
 
-通过在线演示来了解FuSite的功能：[FuSite在线演示](https://fumingzhe.mynatapp.cc)
+通过在线演示来了解FuSite的功能：[FuSite在线演示](https://www.fumingzhe.cn)
 
 ## 代码架构
 
