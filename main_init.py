@@ -2,7 +2,6 @@
 
 from pymongo import MongoClient
 import hashlib
-from .main_settings import get_now_music
 
 client = MongoClient()
 
@@ -24,5 +23,3 @@ client.FuSite.users.insert_one({
     "爱好": "",
     "历史记录": []
 })
-
-get_now_music()

@@ -75,3 +75,9 @@ for root, dirs, files in os.walk(directory + "static/images/users"):
             for n in files1:
                 if client_users.find_one({"个人主页": {"$regex": n}}) is None and client_blog.find_one({"文章内容": {"$regex": n}}) is None:
                     os.remove(directory + f"static/images/users/{d}/{n}")
+
+
+client_music.drop()
+client_music.insert_one(get_now_music())
+if os.path.exists(f"{directory}static/images/WordCloud") is False:
+    os.mkdir(f"{directory}static/images/WordCloud")
