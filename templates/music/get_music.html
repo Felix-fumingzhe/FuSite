@@ -5,7 +5,7 @@ FuSite-音乐
 {% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ 'APlayer-css'|jscdn }}">
+<link rel="stylesheet" href="{{ 'APlayer-css'|cdn }}">
 {% endblock %}
 
 {% block content %}
@@ -64,8 +64,8 @@ FuSite-音乐
 {% endblock %}
 
 {% block end %}
-<script src="{{ 'APlayer-js'|jscdn }}"></script>
-<script src="{{ 'jquery'|jscdn }}"></script>
+<script src="{{ 'APlayer-js'|cdn }}"></script>
+<script src="{{ 'jquery'|cdn }}"></script>
 <script>
     {% if music != None %}
     var music = [["{{ music['1']['music_name'] }}", "{{ music['1']['music_url'] }}"]];
@@ -94,40 +94,36 @@ FuSite-音乐
         }
     return false;
     }
-    $.post("/music/get_music_url", {"music_url": "{{ music['1'].music_url }}".replace(/amp;/,"")}, function(data){
-        ap = new APlayer({
-            container: document.getElementById('aplayer'),
-            fixed: true,
-            autoplay: true,
-            volume: 0.6,
-            mutex: true,
-            order: 'list',
-            preload: 'metadata',
-            audio: [{
-                name: music[0][0],
-                artist: "{{ music['1']['music_artist'] }}",
-                url: data.music_url,
-                cover: "{{ music['1']['music_picUrl'] }}",
-                theme: getRandomColor()
-            }]
-        });
+    ap = new APlayer({
+        container: document.getElementById('aplayer'),
+        fixed: true,
+        autoplay: true,
+        volume: 0.6,
+        mutex: true,
+        order: 'list',
+        preload: 'metadata',
+        audio: [{
+            name: music[0][0],
+            artist: "{{ music['1']['music_artist'] }}",
+            url: "{{ music['1']['music_url'] }}",
+            cover: "{{ music['1']['music_picUrl'] }}",
+            theme: getRandomColor()
+        }]
     });
 
-    function add_play(name, pic_url, music_url, artist) {
+    function add_play(name, pic_url, music_url, artist, music_lyrics) {
         if (arrayHasElement(music, [name, music_url]) == false)
         {
             music.push([name, music_url]);
-            $.post("/music/get_music_url", {"music_url":music_url }, function(data) {
-                ap.list.add([
-                    {
-                        name: name,
-                        artist: artist,
-                        url: data.music_url,
-                        cover: pic_url,
-                        theme: getRandomColor()
-                    }
-                ]);
-            })
+            ap.list.add([
+                {
+                    name: name,
+                    artist: artist,
+                    url: music_url,
+                    cover: pic_url,
+                    theme: getRandomColor()
+                }
+            ]);
             ap.list.switch(arrayHasElement(music, [name, music_url])-1);
             ap.play();
         }

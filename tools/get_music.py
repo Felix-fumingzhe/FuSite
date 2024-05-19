@@ -1,62 +1,182 @@
 # encoding = utf-8
 
 import requests
-from retrying import retry
+import json
+import re
+import hashlib
+import os
+import time
+from jsonpath import jsonpath
 
 
-@retry(stop_max_attempt_number=5)
+MID = "0376045b610cd30487f66855d296194b"
+UUID = "0376045b610cd30487f66855d296194b"
+DFID = "34cTSp3R2RvO1lnyUh353ByL"
+TOKEN = "2e145f0776574048ee733b73e0f5644e175dd8ba6cd97f85c3e3cb3b0e3f5d1e"
+USERID = 954283296
+SEARCH_PAGE_SIZE = 10
+T = round(time.time() * 1000)
+
+
+
+def md5_hash(string):
+    # 创建一个md5对象
+    md5 = hashlib.md5()
+    # 将字符串转换为字节流并进行MD5加密
+    md5.update(string.encode('utf-8'))
+    # 获取加密后的十六进制结果
+    encrypted_string = md5.hexdigest()
+    return encrypted_string
+
+
+class Audio:
+    def __init__(self, id):
+        self.id = id
+        self.info_url = 'https://wwwapi.kugou.com/play/songinfo'
+
+    def audio(self):
+        params = {
+            "srcappid": 2919,
+            "clientver": 20000,
+            f"clienttime": T,
+            "mid": MID,
+            "uuid": UUID,
+            "dfid": DFID,
+            "appid": 1014,
+            "platid": 4,
+            "encode_album_audio_id": self.id,
+            "token": TOKEN,
+            "userid": USERID,
+            "signature": self._signature(),
+        }
+
+        resp = requests.get(url=self.info_url, params=params)
+        url = resp.json()['data']['play_url']
+        img = resp.json()['data']['img']
+        lyrics = resp.json()['data']['lyrics']
+        return (url, img, lyrics)
+
+    def _signature(self):
+        """
+        解密 signature 参数
+        这些参数，params中都有，初步猜测，请求提交到服务器时，
+        会按顺序排列 params 中的参数为下面 p 的形状，
+        用 md5 加密后再与 params 中的 signature 做对比
+        """
+        p = [
+            "NVPh5oo715z5DIWAeQlhMDsWXXQV4hwt",
+            "appid=1014",  #
+            f"clienttime={T}",
+            "clientver=20000",  #
+            f"dfid={DFID}",
+            f"encode_album_audio_id={self.id}",
+            f"mid={MID}",
+            "platid=4",  #
+            "srcappid=2919",  #
+            f"token={TOKEN}",
+            f"userid={USERID}",
+            f"uuid={UUID}",
+            "NVPh5oo715z5DIWAeQlhMDsWXXQV4hwt"
+        ]
+
+        signature = md5_hash(''.join(p))
+        return signature
+
+
+class Search:
+
+    def __init__(self, keyword):
+        self.url = 'https://complexsearch.kugou.com/v2/search/song'
+        self.keyword = keyword
+        self.page_size = SEARCH_PAGE_SIZE
+
+    def get_info(self):
+        params = {
+            "callback": "callback123",
+            "srcappid": 2919,
+            "clientver": 1000,
+            "clienttime": T,
+            "mid": MID,
+            "uuid": UUID,
+            "dfid": DFID,
+            "keyword": self.keyword,
+            "page": 1,
+            "pagesize": self.page_size,
+            "bitrate": 0,
+            "isfuzzy": 0,
+            "inputtype": 0,
+            "platform": "WebFilter",
+            "userid": USERID,
+            "iscorrection": 1,
+            "privilege_filter": 0,
+            "filter": 10,
+            "token": TOKEN,
+            "appid": 1014,
+            "signature": self._signature(),
+        }
+        r = requests.get(url=self.url, params=params).text
+        pattern = re.compile('^callback123\((.*?)\)$')
+        json_info = json.loads(pattern.findall(r)[0])
+        id = jsonpath(json_info, '$..EMixSongID')
+        singer_names = jsonpath(json_info, '$..SingerName')
+        song_names = jsonpath(json_info, '$..SongName')
+        album_names = jsonpath(json_info, '$..AlbumName')
+        return zip(id, singer_names, song_names, album_names)
+
+    def _signature(self):
+        p = [
+            "NVPh5oo715z5DIWAeQlhMDsWXXQV4hwt",
+            "appid=1014",
+            "bitrate=0",
+            "callback=callback123",
+            f"clienttime={T}",
+            "clientver=1000",
+            f"dfid={DFID}",
+            "filter=10",
+            "inputtype=0",
+            "iscorrection=1",
+            "isfuzzy=0",
+            f"keyword={self.keyword}",
+            f"mid={MID}",
+            "page=1",
+            f"pagesize={self.page_size}",
+            "platform=WebFilter",
+            "privilege_filter=0",
+            "srcappid=2919",
+            f"token={TOKEN}",
+            f"userid={USERID}",
+            f"uuid={UUID}",
+            "NVPh5oo715z5DIWAeQlhMDsWXXQV4hwt"
+        ]
+        signature = md5_hash(''.join(p))
+        return signature
+
+def is_string_digit(s):
+    """检查字符串是不是数字"""
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+
 def get_music_dict(song_name):
-    headers = {
-        'accept': 'application/json, text/plain, */*',
-        'accept - encoding': 'gzip, deflate',
-        'accept - language': 'zh - CN, zh;q = 0.9',
-        'cache - control':'no - cache',
-        'Connection': 'keep-alive',
-        'csrf': 'HH3GHIQ0RYM',
-        'Referer': 'http://www.kuwo.cn/search/list?key=%E5%91%A8%E6%9D%B0%E4%BC%A6',
-        'User-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                      'Chrome/99.0.4844.51 Safari/537.36',
-        'Cookie': '_ga=GA1.2.218753071.1648798611; _gid=GA1.2.144187149.1648798611; _gat=1; '
-                  'Hm_lvt_cdb524f42f0ce19b169a8071123a4797=1648798611; '
-                  'Hm_lpvt_cdb524f42f0ce19b169a8071123a4797=1648798611; kw_token=HH3GHIQ0RYM'
-    }
-    search_url = "http://www.kuwo.cn/api/www/search/searchMusicBykeyWord"
-    search_data = {
-        'key': song_name,
-        'pn': '1',
-        'rn': '80',
-        'httpsStatus': '1',
-        'reqId': '858597c1-b18e-11ec-83e4-9d53d2ff08ff'
-    }
     num = 1
     song_dict = {}
-    song_list = requests.get(search_url, params=search_data, headers=headers, timeout=20).json()
-    songs_req_id = song_list["reqId"]
-    if song_list["data"]["list"] == []:
-        return None
-    for item in song_list["data"]["list"]:
+    for index, info in enumerate(Search(song_name).get_info()):
         try:
-            song = dict({})
-            song_rid = item["rid"]
-            music_url = 'http://www.kuwo.cn/api/v1/www/music/playUrl?mid={}&type=convert_url3' \
-                        '&httpsStatus=1&reqId={}'\
-                        .format(song_rid, songs_req_id)
-            song["music_name"] = item["name"]
-            song["music_artist"] = item["artist"]
-            song["music_album"] = item["album"]
-            song["music_picUrl"] = item["pic"]
-            song["music_id"] = song_rid
-            song["music_url"] = music_url
+            song = {}
+            info2 = Audio(info[0]).audio()
+            song["music_name"] = info[2]
+            song["music_artist"] = info[1]
+            song["music_album"] = info[3]
+            song["music_picUrl"] = info2[1]
+            song["music_url"] = info2[0]
+            song["music_lyrics"] = info2[2]
             song_dict[str(num)] = song
+            if num == SEARCH_PAGE_SIZE:
+                break
             num += 1
         except:
             continue
     return song_dict
-
-
-def get_music_url(music_url):
-    try:
-        response_data = requests.get(music_url).json()
-        return response_data["data"]["url"]
-    except:
-        return None

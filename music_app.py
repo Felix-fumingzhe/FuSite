@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, render_template, session, abort, jsonify
 from main_settings import client_music
-from tools import get_music_url, get_music_dict
+from tools import get_music_dict
 
 
 music_app = Blueprint("music", __name__)
@@ -33,12 +33,3 @@ def get_music():
         return render_template("music/get_music.html", **context)
     else:
         abort(404)
-
-
-@music_app.route("/music/get_music_url", methods=["GET", "POST"])
-def get_m_url():
-    if request.method == "POST":
-        music_url = request.form.get("music_url")
-        if music_url is not None:
-            return jsonify({"music_url": get_music_url(music_url)})
-    abort(404)
