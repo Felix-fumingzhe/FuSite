@@ -363,11 +363,11 @@ def change_email():
             context["error"] = "请先获取验证码"
             return render_template("users/change_email.html", **users, **context)
         elif datetime.datetime.now() > datetime.datetime(session["verification_change_email"][3][0],
-                                                            session["verification_change_email"][3][1],
-                                                            session["verification_change_email"][3][2],
-                                                            session["verification_change_email"][3][3],
-                                                            session["verification_change_email"][3][4],
-                                                            session["verification_change_email"][3][5]):
+                                                        session["verification_change_email"][3][1],
+                                                        session["verification_change_email"][3][2],
+                                                        session["verification_change_email"][3][3],
+                                                        session["verification_change_email"][3][4],
+                                                        session["verification_change_email"][3][5]):
             context["error"] = "验证码已过期，请重新获取"
             return render_template("users/change_email.html", **users, **context)
         elif session["verification_change_email"][1] != email:
@@ -494,6 +494,17 @@ def editor_blog():
         return render_template("users/editor_blog.html", blog=blog)
     else:
         abort(404)
+
+
+@users_app.route("/users/settings")
+def setting():
+    return render_template("users/settings.html")
+
+
+@users_app.route("/users/info")
+def settings():
+    return render_template("users/info.html")
+
 
 @users_app.route("/users/send_email", methods=["GET", "POST"])
 def send_e():
