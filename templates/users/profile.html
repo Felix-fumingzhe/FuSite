@@ -6,8 +6,8 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>FuSite-个人中心</title>
-    <link rel="stylesheet" href="{{ 'main-css'|jscdn }}">
-    <link rel="stylesheet" href="{{ 'bulma'|jscdn }}">
+    <link rel="stylesheet" href="{{ 'main-css'|cdn }}">
+    <link rel="stylesheet" href="{{ 'bulma'|cdn }}">
     <style>
         html,
         body {
@@ -138,6 +138,14 @@
                             <ul class="content menu-list">
                                 <li><a href="/users/add_blog">添加博客</a></li>
                                 <li><a href="/users/blogs_info">博客管理</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top: 5px;">
+                        <div class="card-content menu">
+                            <ul class="content menu-list">
+                                <li><a href="/users/settings">设置</a></li>
+                                <li><a href="/users/info">关于网站</a></li>
                             </ul>
                         </div>
                     </div>
@@ -290,8 +298,9 @@
             </div>
         </div>
     </section>
-    <script src="{{ 'jquery'|jscdn }}"></script>
-    <script src="{{ 'mui'|jscdn }}"></script>
+    <script src="{{ 'jquery'|cdn }}"></script>
+    <script src="{{ 'mui'|cdn }}"></script>
+    <script src="{{ 'mainjs'|cdn }}"></script>
     {% block end %}
     {% endblock %}
     <script>
