@@ -1,7 +1,7 @@
 # encoding = utf-8
 
 from flask import Flask, redirect, render_template, session, request, jsonify, abort, send_file
-from main_settings import key, init_session, DEBUG, HOST, PORT, directory, client_users, history
+from main_settings import key, init_session, DEBUG, THREADED, HOST, PORT, directory, client_users, history
 from users_app import users_app
 from music_app import music_app
 from chat_app import chat_app
@@ -38,6 +38,8 @@ def before():
         session.permanent = True
         app.permanent_session_lifetime = datetime.timedelta(days=7)
     # 处理不同的请求路径
+    if request.path == "/baidu_verify_codeva-uOcLbwaYai.html":
+        return None
     if request.path == "/users/login" \
         or request.path == "/users/forget_password" \
         or request.path == "/users/register" \
@@ -60,7 +62,7 @@ def before():
     else:
         return redirect("/users/login")
 
-@app.template_filter("jscdn")
+@app.template_filter("cdn")
 def cdn(name):
     # 根据名称返回相应的 CDN 链接
     if name == "bulma":
@@ -76,7 +78,15 @@ def cdn(name):
     elif name == "APlayer-js":
         return "https://cdn.bootcdn.net/ajax/libs/aplayer/1.10.1/APlayer.min.js"
     elif name == "main-css":
-        return "https://fu-mingzhe.github.io/static/css/main.css"
+        return "/static/css/main.css"
+    elif name == "atom-one-light":
+        return "/static/tinymce/plugins/becodesample/highlight.js-11.5.1/styles/atom-one-light.css"
+    elif name == "tinymce":
+        return "/static/tinymce/tinymce.min.js"
+    elif name == "highlight":
+        return "/static/tinymce/plugins/becodesample/highlight.js-11.5.1/highlight.min.js"
+    elif name == "mainjs":
+        return "/static/js/main.js"
     else:
         return None
 
@@ -145,6 +155,10 @@ def index():
         session.pop("index_text")
         return render_template("index.html", **context)
 
+@app.route("/baidu_verify_codeva-uOcLbwaYai.html")
+def baidu():
+    return render_template("baidu_verify_codeva-uOcLbwaYai.html")
+
 
 @app.route("/upload_images", methods=["POST"])
 def upload_images():
@@ -195,6 +209,6 @@ def html404(error):
 
 if __name__ == '__main__':
     # socketio.run(app, host=HOST, debug=DEBUG, port=PORT)
-    app.run(host=HOST, port=PORT, debug=DEBUG)
+    app.run(host=HOST, port=PORT, debug=DEBUG, threaded=THREADED)
     # server = pywsgi.WSGIServer(('0.0.0.0', 5555), app)
     # server.serve_forever()

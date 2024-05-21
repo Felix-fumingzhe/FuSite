@@ -9,7 +9,8 @@ from datetime import datetime
 
 HOST = "0.0.0.0"
 PORT = 80
-DEBUG = True
+DEBUG = False
+THREADED = False
 PAGE = 3 #博客的每页展示数目
 EMAIL = "2372769798@qq.com"  #邮箱
 EMAIL_PASSWORD = "mradcasgadhddjch" #邮箱授权码
