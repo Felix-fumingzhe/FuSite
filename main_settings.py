@@ -8,11 +8,11 @@ from datetime import datetime
 
 
 HOST = "0.0.0.0"
-PORT = 5555
+PORT = 80
 DEBUG = True
 PAGE = 3 #博客的每页展示数目
-EMAIL = "邮箱"  #邮箱
-EMAIL_PASSWORD = "邮箱授权码" #邮箱授权码
+EMAIL = "2372769798@qq.com"  #邮箱
+EMAIL_PASSWORD = "mradcasgadhddjch" #邮箱授权码
 SMTP_ADDRESS = "smtp.qq.com" #SMTP服务器
 
 directory = (os.path.split(os.path.realpath(__file__))[0]).split("\\")
@@ -23,6 +23,9 @@ client = MongoClient()
 client_users = client.FuSite.users
 client_music = client.FuSite.music
 client_blog = client.FuSite.blogs
+client_settings = client.FuSite.settings
+client_date = client.FuSite.date
+
 
 def init_session():
     if session.get("error") is None:
