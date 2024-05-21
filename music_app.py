@@ -1,6 +1,6 @@
 # encoding = utf-8
 
-from flask import Blueprint, request, render_template, session, abort, jsonify
+from flask import Blueprint, request, render_template, session, abort
 from main_settings import client_music
 from tools import get_music_dict
 
