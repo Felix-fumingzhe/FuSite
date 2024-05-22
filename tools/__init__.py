@@ -8,3 +8,4 @@ from .WordCloud import cloud
 from .idiom_search import idiom_search
 from .get_music import get_music_dict
 from .ai import ai_draw
+from .date import date

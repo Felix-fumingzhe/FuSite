@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+
+{% block title %}
+FuSite-工具-年度事件表
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div class="box box mt-6 ml-6 mr-6">
+    <div class="table-container">
+        <table class="table is-hoverable is-fullwidth is-bordered">
+            <thead>
+                <tr>
+                    <th title="事件名">事件名</th>
+                    <th title="公历日期">公历日期</th>
+                    <th title="农历日期">农历日期</th>
+                    <th title="距今天数">距今天数</th>
+                    <th title="星期几">星期几</th>
+                    <th title="操作">操作</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th title="事件名">事件名</th>
+                    <th title="公历日期">公历日期</th>
+                    <th title="农历日期">农历日期</th>
+                    <th title="距今天数">距今天数</th>
+                    <th title="星期几">星期几</th>
+                    <th title="操作">操作</th>
+                </tr>
+            </tfoot>
+            <tbody>
+            {% for i in date %}
+                <tr>
+                    <td>{{ i["name"] }}</td>
+                    <td>{{ i["gong"] }}</td>
+                    <td>{{ i["nong"] }}</td>
+                    <td>{{ i["distance"] }}</td>
+                    <td>{{ i["week"] }}</td>
+                    {% if i["delete"] %}
+                    <td><button class="button is-danger" onclick="delete_date(name='{{ i['name'] }})'">删除</button></td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- <form action="" method="get">
+        <input type="text" class="input is-fullwidth {{ username|color }}" placeholder="请输入要搜索的成语" required name="keyword" value="{{ keyword }}">
+        <input type="submit" class="button is-fullwidth mt-3 {{ username|color }}" value="提交">
+    </form> -->
+</div>
+
+{% endblock %}

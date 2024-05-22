@@ -1,8 +1,8 @@
 # encoding = utf-8
 
 from flask import Blueprint, render_template, session, request
-from tools import cloud, translate, ai_draw
-from main_settings import directory
+from tools import cloud, translate, ai_draw, date
+from main_settings import directory, client_users
 
 
 tools_app = Blueprint("tools", __name__)
@@ -48,6 +48,19 @@ def tools_translation():
         context["from"] = _from
         context["to"] = _to
     return render_template("tools/Translation.html", **context)
+
+
+@tools_app.route("/tools/date", methods=["GET", "POST"])
+def tools_date():
+    context = {
+        "username": session["username"]
+    }
+    if request.method == "POST":
+        pass
+    date_all = date(client_users.find_one({"用户名": context["username"]})["用户id"])
+    context["date_all"] = date_all
+    return render_template("tools/date.html", **context)
+
 
 @tools_app.route("/tools/AI_Draw", methods=["GET", "POST"])
 def AI_Draw():

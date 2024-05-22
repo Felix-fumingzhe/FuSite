@@ -66,7 +66,7 @@ def before():
 def cdn(name):
     # 根据名称返回相应的 CDN 链接
     if name == "bulma":
-        return "https://cdn.bootcdn.net/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+        return "https://cdn.bootcdn.net/ajax/libs/bulma/1.0.0/css/bulma.min.css"
     elif name == "ionicons":
         return "https://cdn.staticfile.org/ionicons/2.0.1/css/ionicons.min.css"
     elif name == "mui":
