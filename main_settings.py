@@ -12,8 +12,8 @@ PORT = 80
 DEBUG = False
 THREADED = False
 PAGE = 3 #博客的每页展示数目
-EMAIL = "2372769798@qq.com"  #邮箱
-EMAIL_PASSWORD = "mradcasgadhddjch" #邮箱授权码
+EMAIL = "邮箱"  #邮箱
+EMAIL_PASSWORD = "邮箱授权码" #邮箱授权码
 SMTP_ADDRESS = "smtp.qq.com" #SMTP服务器
 
 directory = (os.path.split(os.path.realpath(__file__))[0]).split("\\")
@@ -85,3 +85,5 @@ client_music.drop()
 client_music.insert_one(get_now_music())
 if os.path.exists(f"{directory}static/images/WordCloud") is False:
     os.mkdir(f"{directory}static/images/WordCloud")
+if os.path.exists(f"{directory}static/images/users") is False:
+    os.mkdir(f"{directory}static/images/users")
