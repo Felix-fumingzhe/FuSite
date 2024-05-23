@@ -4,7 +4,6 @@ from zhdate import ZhDate
 
 
 def date(id):
-    print(id)
     week_list = ["星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"]
     date = client_date.find_one({"id": "main"})
     f_gong = date["date"]["f_gong"]

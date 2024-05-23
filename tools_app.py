@@ -1,8 +1,8 @@
 # encoding = utf-8
 
-from flask import Blueprint, render_template, session, request
+from flask import Blueprint, render_template, session, request, redirect
 from tools import cloud, translate, ai_draw, date
-from main_settings import directory, client_users
+from main_settings import directory, client_users, client_date
 
 
 tools_app = Blueprint("tools", __name__)
@@ -50,17 +50,42 @@ def tools_translation():
     return render_template("tools/Translation.html", **context)
 
 
-@tools_app.route("/tools/date", methods=["GET", "POST"])
+@tools_app.route("/tools/date")
 def tools_date():
     context = {
         "username": session["username"]
     }
-    if request.method == "POST":
-        pass
-    date_all = date(client_users.find_one({"用户名": context["username"]})["用户id"])
-    context["date_all"] = date_all
+    _id = client_users.find_one({"用户名": context["username"]})["用户id"]
+    date_all = date(_id)
+    context["date"] = date_all
     return render_template("tools/date.html", **context)
 
+@tools_app.route("/tools/date_update", methods=["POST"])
+def tools_date_update():
+    _id = client_users.find_one({"用户名": session["username"]})["用户id"]
+    name = request.form.get("name")
+    c = request.form.get("c")
+    month = request.form.get("month")
+    day = request.form.get("day")
+    if name is not None and c is not None and month is not None and day is not None:
+        date_all = client_date.find_one({"id": _id})["date"]
+        c = "b_gong" if c == "公历" else "b_nong"
+        date_all[c][name] = [int(month), int(day)]
+        client_date.update_one({"id": _id}, {"$set": {"date": date_all}})
+        return redirect("/tools/date")
+
+@tools_app.route("/tools/date_delete", methods=["POST"])
+def tools_date_delete():
+    _id = client_users.find_one({"用户名": session["username"]})["用户id"]
+    if request.form.get("delete") is not None:
+        delete = request.form.get("delete")
+        date_all = client_date.find_one({"id": _id})["date"]
+        if delete in date_all["b_gong"]:
+            del date_all["b_gong"][delete]
+        else:
+            del date_all["b_nong"][delete]
+        client_date.update_one({"id": _id}, {"$set": {"date": date_all}})
+        return redirect("/tools/date")
 
 @tools_app.route("/tools/AI_Draw", methods=["GET", "POST"])
 def AI_Draw():

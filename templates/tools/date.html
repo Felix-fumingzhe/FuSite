@@ -41,7 +41,12 @@ FuSite-工具-年度事件表
                     <td>{{ i["distance"] }}</td>
                     <td>{{ i["week"] }}</td>
                     {% if i["delete"] %}
-                    <td><button class="button is-danger" onclick="delete_date(name='{{ i['name'] }})'">删除</button></td>
+                    <td>
+                        <form action="/tools/date_delete" method="post">
+                            <input type="hidden" name="delete" value="{{ i['name'] }}">
+                            <input type="submit" class="button is-danger" value="删除">
+                        </form>
+                    </td>
                     {% else %}
                     <td></td>
                     {% endif %}
@@ -50,10 +55,20 @@ FuSite-工具-年度事件表
             </tbody>
         </table>
     </div>
-    <!-- <form action="" method="get">
-        <input type="text" class="input is-fullwidth {{ username|color }}" placeholder="请输入要搜索的成语" required name="keyword" value="{{ keyword }}">
-        <input type="submit" class="button is-fullwidth mt-3 {{ username|color }}" value="提交">
-    </form> -->
+    <form action="/tools/date_update" method="post">
+        <div class="grid">
+            <input type="text" class="input is-fullwidth is-primary cell" placeholder="请输入事件名称" required name="name">
+            <div class="select is-fullwidth is-primary">
+                <select required name="c">
+                    <option>公历</option>
+                    <option>农历</option>
+                </select>
+            </div>
+            <input type="datetime" class="input is-primary is-fullwidth" placeholder="请输入月" required name="month">
+            <input type="datetime" class="input is-primary is-fullwidth" placeholder="请输入日" required name="day">
+        </div>
+        <input type="submit" class="button is-fullwidth mt-3 is-primary" value="提交">
+    </form>
 </div>
 
 {% endblock %}
