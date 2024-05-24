@@ -8,8 +8,8 @@ from datetime import datetime
 
 
 HOST = "0.0.0.0"
-PORT = 80
-DEBUG = False
+PORT = 5554
+DEBUG = True
 THREADED = False
 PAGE = 3 #博客的每页展示数目
 EMAIL = "邮箱"  #邮箱
@@ -81,9 +81,11 @@ for root, dirs, files in os.walk(directory + "static/images/users"):
                     os.remove(directory + f"static/images/users/{d}/{n}")
 
 
-client_music.drop()
-client_music.insert_one(get_now_music())
 if os.path.exists(f"{directory}static/images/WordCloud") is False:
     os.mkdir(f"{directory}static/images/WordCloud")
 if os.path.exists(f"{directory}static/images/users") is False:
     os.mkdir(f"{directory}static/images/users")
+if os.path.exists(f"{directory}static/music") is False:
+    os.mkdir(f"{directory}static/music")
+client_music.drop()
+client_music.insert_one(get_now_music())

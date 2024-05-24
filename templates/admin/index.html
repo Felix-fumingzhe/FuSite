@@ -5,8 +5,8 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>{% block title %} FuSite-管理员主页 {% endblock %}</title>
-    <link rel="stylesheet" href="{{ 'main-css'|jscdn }}">
-    <link rel="stylesheet" href="{{ 'bulma'|jscdn }}">
+    <link rel="stylesheet" href="{{ 'main-css'|cdn }}">
+    <link rel="stylesheet" href="{{ 'bulma'|cdn }}">
     {% block head %}
 
     {% endblock %}
@@ -89,12 +89,14 @@
                 {% for i in range(users|length) %}
                     <tr id="{{ users[i]['用户名'] }}">
                             <th onclick="window.open('/admin_users/{{ users[i].用户名 }}')">{{ i+1 }}</th>
-                            <th onclick="window.open('/admin_users/{{ users[i].用户名 }}')">{{ users[i]['用户名'] }}</th>
-                            <th onclick="window.open('/admin_users/{{ users[i].用户名 }}')">{{ users[i]['邮箱'] }}</th>
-                            <th onclick="window.open('/admin_users/{{ users[i].用户名 }}')">{{ users[i]['用户id'] }}</th>
+                            <th>{{ users[i]['用户名'] }}</th>
+                            <th>{{ users[i]['邮箱'] }}</th>
+                            <th>{{ users[i]['用户id'] }}</th>
                         <th class="control">
                             <label class="radio">
-                                {% if users[i]['权限'] == 1 %}
+                                {% if users[i]['用户id'] == 'aM3di3j1SpEQkmb' %}
+                                    <input type="radio" name="{{ users[i]['用户名'] }}_qx" value="1" disabled>
+                                {% elif users[i]['权限'] == 1 %}
                                     <input type="radio" name="{{ users[i]['用户名'] }}_qx" checked value="1">
                                 {% else %}
                                     <input type="radio" name="{{ users[i]['用户名'] }}_qx" value="1">
@@ -102,7 +104,9 @@
                                 普通账号
                             </label>
                             <label class="radio">
-                                {% if users[i]['权限'] == 2 %}
+                                {% if users[i]['用户id'] == 'aM3di3j1SpEQkmb' %}
+                                    <input type="radio" name="{{ users[i]['用户名'] }}_qx" value="2" disabled>
+                                {% elif users[i]['权限'] == 2 %}
                                     <input type="radio" name="{{ users[i]['用户名'] }}_qx" checked value="2">
                                 {% else %}
                                     <input type="radio" name="{{ users[i]['用户名'] }}_qx" value="2">
@@ -134,7 +138,8 @@
 {% block end %}
 
 {% endblock %}
-<script src="{{ 'mui'|jscdn }}"></script>
+<script src="{{ 'mui'|cdn }}"></script>
+<script src="{{ 'mainjs'|cdn }}"></script>
 <script>
     if("{{ admin_text }}" != ""){
         mui.alert("{{ admin_text }}");

@@ -10,9 +10,7 @@ music_app = Blueprint("music", __name__)
 @music_app.route("/music")
 @music_app.route("/music/index")
 def music_index():
-    music_list = list(client_music.find())
-    if music_list != []:
-        music_list = list(client_music.find())[0]
+    music_list = client_music.find() if client_music.find()[0].get("1") is not None else []
     context = {
         "username": session["username"],
         "music": music_list

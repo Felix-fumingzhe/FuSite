@@ -5,8 +5,8 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>{% block title %}FuSite-博客{% endblock %}</title>
-    <link rel="stylesheet" href="{{ 'main-css'|jscdn }}">
-    <link rel="stylesheet" href="{{ 'bulma'|jscdn }}">
+    <link rel="stylesheet" href="{{ 'main-css'|cdn }}">
+    <link rel="stylesheet" href="{{ 'bulma'|cdn }}">
     {% block head %}
     {% endblock %}
 </head>
@@ -212,7 +212,8 @@
             </div>
         </div>
     </section>
-    <script src="{{ 'mui'|jscdn }}"></script>
+    <script src="{{ 'mui'|cdn }}"></script>
+    <script src="{{ 'mainjs'|cdn }}"></script>
     <script>
         var navbar_menu = mui(".navbar-menu")[0]
         mui(".navbar-burger")[0].addEventListener("tap",function(){

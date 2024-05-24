@@ -5,8 +5,8 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png') }}">
     <title>{% block title %}FuSite-登录{% endblock %}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <link rel="stylesheet" href="{{ 'main-css'|jscdn }}">
-    <link rel="stylesheet" href="{{ 'bulma'|jscdn }}">
+    <link rel="stylesheet" href="{{ 'main-css'|cdn }}">
+    <link rel="stylesheet" href="{{ 'bulma'|cdn }}">
     <style>
         body{
             color: rgb(255,255,255);
@@ -18,8 +18,9 @@
         {% block body %}
         {% endblock %}
     </div>
-    <script src="{{ 'jquery'|jscdn }}"></script>
-    <script src="{{ 'mui'|jscdn }}"></script>
+    <script src="{{ 'jquery'|cdn }}"></script>
+    <script src="{{ 'mui'|cdn }}"></script>
+    <script src="{{ 'mainjs'|cdn }}"></script>
     {% block end %}
     {% endblock %}
 </body>

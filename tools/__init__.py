@@ -2,7 +2,6 @@
 
 
 from .requests_api import get_Handwriting
-from .face import face_info
 from .translate import translate
 from .WordCloud import cloud
 from .idiom_search import idiom_search

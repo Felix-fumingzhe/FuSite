@@ -31,8 +31,8 @@ FuSite-添加博客
 {% endblock %}
 
 {% block end %}
-<script src="https://fu-mingzhe.github.io/static/tinymce/tinymce.min.js"></script>
-<script src="https://fu-mingzhe.github.io/static/tinymce/plugins/becodesample/highlight.js-11.5.1/highlight.min.js"></script>
+<script src="{{ 'tinymce'|cdn }}"></script>
+<script src="{{ 'highlight'|cdn }}"></script>
 <script>
     tinymce.init({
         selector: "#content",
@@ -53,7 +53,7 @@ FuSite-添加博客
         toolbar3: 'table image media hr insertdatetime preview searchreplace kityformula-editor  charmap emoticons lineheight wordcount importword fullscreen',
         fontsize_formats: '10px 12px 14px 16px 18px 24px 36px 48px 64px ',
         quickbars_insert_toolbar: 'image link table emoticons',
-        content_css: 'https://fu-mingzhe.github.io/static/tinymce/plugins/becodesample/highlight.js-11.5.1/styles/atom-one-light.css',
+        content_css: "{{ 'atom-one-light'|cdn }}",
         lineheight_formats: '1.0 1.2 1.4 1.5 1.6 1.8 2.0 2.4 2.5 2.6 2.8 3.0',
         images_upload_url: '/upload_admin_images',
         images_upload_base_path: '/'
